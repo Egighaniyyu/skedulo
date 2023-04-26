@@ -12,6 +12,12 @@
                     class="@if (Request::segment(1) == 'guru-list' or Request::segment(1) == 'guru-grid') active @endif">
                     <a href="/guru-list"><i class="fas fa-chalkboard-teacher"></i> <span> Data Guru</span></a>
                 </li>
+                <li class="@if (Request::segment(1) == 'mapel') active @endif">
+                    <a href="/mapel"><i class="fas fa-book-reader"></i> <span> Mata Pelajaran</span></a>
+                </li>
+                <li class="@if (Request::segment(1) == 'ruangan') active @endif">
+                    <a href="/ruangan"><i class="fas fa-building"></i> <span> Kelas</span></a>
+                </li>
             </ul>
         </div>
     </div>
