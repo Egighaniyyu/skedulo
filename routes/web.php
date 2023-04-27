@@ -7,6 +7,7 @@ use App\Http\Controllers\GuruListController;
 use App\Http\Controllers\GuruGridController;
 use App\Http\Controllers\MataPelajaranController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\PenugasanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,5 +31,6 @@ Route::resource('/guru-list', GuruListController::class);
 Route::resource('/guru-grid', GuruGridController::class);
 Route::resource('/mapel', MataPelajaranController::class);
 Route::resource('/ruangan', RuanganController::class);
+Route::resource('/penugasan', PenugasanController::class);
 // Route::get('/guru-list', 'DataGuruController@guruList')->name('guru.list');
 // Route::get('/guru/guru-list', [DataGuruController::class, 'guruList'])->name('guru.list');
