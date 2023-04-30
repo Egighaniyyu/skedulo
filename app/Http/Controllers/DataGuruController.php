@@ -32,13 +32,19 @@ class DataGuruController extends Controller
     {
         // validate image file
         $this->validate($request, [
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // upload image
-        $imageName = time() . '.' . $request->foto->extension(); //membuat nama file gambar dengan timestamp
-        $path = 'public/guru/'; //path direktori penyimpanan file gambar
-        $request->foto->move(public_path($path), $imageName); //menyimpan file gambar ke direktori public/images
+        if ($request->hasFile('foto')) {
+            // upload image
+            $imageName = time() . '.' . $request->foto->extension(); //membuat nama file gambar dengan timestamp
+            $path = 'public/guru/'; //path direktori penyimpanan file gambar
+            $request->foto->move(public_path($path), $imageName); //menyimpan file gambar ke direktori public/images
+        } else {
+            // jika tidak ada foto yang diunggah, gunakan foto default
+            $imageName = 'user.jpg';
+        }
+
 
         DataGuru::create([
             'nama' => $request->nama,
@@ -73,14 +79,20 @@ class DataGuruController extends Controller
      */
     public function update(Request $request, DataGuru $guru)
     {
+        // validate image file
         $this->validate($request, [
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // upload image
-        $imageName = time() . '.' . $request->foto->extension(); //membuat nama file gambar dengan timestamp
-        $path = 'public/guru/'; //path direktori penyimpanan file gambar
-        $request->foto->move(public_path($path), $imageName); //menyimpan file gambar ke direktori public/images
+        if ($request->hasFile('foto')) {
+            // upload image
+            $imageName = time() . '.' . $request->foto->extension(); //membuat nama file gambar dengan timestamp
+            $path = 'public/guru/'; //path direktori penyimpanan file gambar
+            $request->foto->move(public_path($path), $imageName); //menyimpan file gambar ke direktori public/images
+        } else {
+            // jika tidak ada foto yang diunggah, gunakan foto default
+            $imageName = 'user.jpg';
+        }
 
         $guru->update([
             'nama' => $request->nama,

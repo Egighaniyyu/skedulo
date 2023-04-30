@@ -18,6 +18,9 @@
                 <li class="@if (Request::segment(1) == 'ruangan') active @endif">
                     <a href="/ruangan"><i class="fas fa-building"></i> <span> Kelas</span></a>
                 </li>
+                <li class="@if (Request::segment(1) == 'jam-belajar') active @endif">
+                    <a href="/jam-belajar"><i class="fas fa-calendar"></i> <span> Jam Belajar</span></a>
+                </li>
                 <li class="@if (Request::segment(1) == 'penugasan') active @endif">
                     <a href="/penugasan"><i class="fas fa-suitcase"></i> <span> Penugasan Guru</span></a>
                 </li>

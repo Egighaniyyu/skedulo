@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DataGuru extends Model
+class JamBelajar extends Model
 {
     use HasFactory;
+    protected $table = 'jam_belajars';
     protected $guarded = [];
     protected $primaryKey = 'id';
-    protected $table = 'data_gurus';
 }
