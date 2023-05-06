@@ -13,58 +13,58 @@ class MataPelajaranSeeder extends Seeder
      */
     public function run(): void
     {
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'PAI',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Quran Hadist',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Fiqih',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'SKI',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'PKN',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Bahasa Indonesia',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Matematika',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Bahasa Inggris',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Biologi',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Fisika',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'IPS',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'TIK',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Bahasa Arab',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Budi Pekerti',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'SBK & Prakarya',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Penjas',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Tauhid',
         ]);
-        MataPelajaran::created([
+        MataPelajaran::create([
             'mapel' => 'Ummi',
         ]);
     }

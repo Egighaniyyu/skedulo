@@ -9,6 +9,7 @@ use App\Http\Controllers\MataPelajaranController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JamBelajarController;
 use App\Http\Controllers\PenugasanController;
+use App\Http\Controllers\PenjadwalanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,5 +35,8 @@ Route::resource('/mapel', MataPelajaranController::class);
 Route::resource('/ruangan', RuanganController::class);
 Route::resource('/jam-belajar', JamBelajarController::class);
 Route::resource('/penugasan', PenugasanController::class);
+
+Route::resource('/penjadwalan', PenjadwalanController::class);
+route::POST('/penjadwalan/getIndividu', [PenjadwalanController::class, 'randIndividu'])->name('penjadwalan.randIndividu');
 // Route::get('/guru-list', 'DataGuruController@guruList')->name('guru.list');
 // Route::get('/guru/guru-list', [DataGuruController::class, 'guruList'])->name('guru.list');

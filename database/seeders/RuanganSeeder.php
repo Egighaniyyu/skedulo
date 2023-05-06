@@ -13,31 +13,31 @@ class RuanganSeeder extends Seeder
      */
     public function run(): void
     {
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '7A',
         ]);
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '7B',
         ]);
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '7C',
         ]);
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '8A',
         ]);
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '8B',
         ]);
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '8C',
         ]);
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '9A',
         ]);
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '9B',
         ]);
-        Ruangan::created([
+        Ruangan::create([
             'ruangan' => '9C',
         ]);
     }

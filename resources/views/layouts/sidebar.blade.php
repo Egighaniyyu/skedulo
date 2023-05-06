@@ -24,6 +24,9 @@
                 <li class="@if (Request::segment(1) == 'penugasan') active @endif">
                     <a href="/penugasan"><i class="fas fa-suitcase"></i> <span> Penugasan Guru</span></a>
                 </li>
+                <li class="@if (Request::segment(1) == 'penjadwalan') active @endif">
+                    <a href="/penjadwalan"><i class="fas fa-table"></i> <span> Penjadwalan</span></a>
+                </li>
             </ul>
         </div>
     </div>

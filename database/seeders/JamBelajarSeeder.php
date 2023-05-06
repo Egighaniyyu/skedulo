@@ -13,23 +13,23 @@ class JamBelajarSeeder extends Seeder
      */
     public function run(): void
     {
-        JamBelajar::created([
+        JamBelajar::create([
             'hari' => 'Senin',
             'jumlah_jam' => 10,
         ]);
-        JamBelajar::created([
+        JamBelajar::create([
             'hari' => 'Selasa',
             'jumlah_jam' => 11,
         ]);
-        JamBelajar::created([
+        JamBelajar::create([
             'hari' => 'Rabu',
             'jumlah_jam' => 11,
         ]);
-        JamBelajar::created([
+        JamBelajar::create([
             'hari' => 'Kamis',
             'jumlah_jam' => 11,
         ]);
-        JamBelajar::created([
+        JamBelajar::create([
             'hari' => 'Jumat',
             'jumlah_jam' => 6,
         ]);

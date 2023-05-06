@@ -13,140 +13,140 @@ class DataGuruSeeder extends Seeder
      */
     public function run(): void
     {
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Pahriati, S.Pd.I',
             'email' => 'pahriati@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Laila Rahmah, S.Pd',
             'email' => 'laila@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Muhammad Khudri S. Pd',
             'email' => 'khudri@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Siti Rabiatul Helda, S.Pd',
             'email' => 'rabiatul@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Diyah Kusmiyatun, S.Pd',
             'email' => 'diyah@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Sarbani Yusuf, S.Pd',
             'email' => 'sarbani@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Nira Nawastiti, M.Pd',
             'email' => 'nira@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Rini, S.Pd',
             'email' => 'rini@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Rose Julianti, S.Pd',
             'email' => 'rose@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Mirana Caesaria, S.Pd',
             'email' => 'mirana@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Mili Yana, S.Pd',
             'email' => 'mili@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Siti Nor Fatmah, S.Pd',
             'email' => 'fatmah@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Shella Oktaviani, S.Pd',
             'email' => 'shella@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Salsabila, S.Kom',
             'email' => 'salsabila@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Siti Nur Khasanah, S.Pd',
             'email' => 'khasanah@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Afini Tri Indrati, S.Psi',
             'email' => 'afini@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Fitransyah, B.Sc',
             'email' => 'fitransyah@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Khaidir Samarkandy, S.Pd',
             'email' => 'khaidir@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Zulkipli, S.Pd, S.Sos',
             'email' => 'zulkipli@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',
         ]);
-        DataGuru::created([
+        DataGuru::create([
             'nama' => 'Ummi',
             'email' => 'ummi@gmail.com',
             'password' => '12345678',
