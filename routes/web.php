@@ -38,5 +38,6 @@ Route::resource('/penugasan', PenugasanController::class);
 
 Route::resource('/penjadwalan', PenjadwalanController::class);
 route::POST('/penjadwalan/getIndividu', [PenjadwalanController::class, 'randIndividu'])->name('penjadwalan.randIndividu');
+route::GET('/penjadwalan/fitness', [PenjadwalanController::class, 'evaluateFitness'])->name('penjadwalan.evaluateFitness');
 // Route::get('/guru-list', 'DataGuruController@guruList')->name('guru.list');
 // Route::get('/guru/guru-list', [DataGuruController::class, 'guruList'])->name('guru.list');

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 {{-- apabila 1 baris --}}
-@section('title' , 'Dashboard')
+@section('title' , 'Penjadwalan')
 
 @push('page-css')
 <link rel="stylesheet" href="assets/plugins/datatables/datatables.min.css">
@@ -17,31 +17,12 @@
                     <h3 class="page-title">Penjadwalan</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Teachers</li>
+                        <li class="breadcrumb-item active">Penjadwalan</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="student-group-form">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Cari berdasarkan ID ...">
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Cari berdasarkan Kelas ...">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="search-student-btn">
-                        <button type="btn" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card card-table">
@@ -52,12 +33,11 @@
                             <div class="page-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="page-title">Penjadwalan</h3>
+                                        <h3 class="page-title">Informasi Penjadwalan</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
                                         <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
                                             Download</a>
-                                        <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +87,45 @@
 
                                         </div>
                                     </div>
-                                    {{-- tampilan proses --}}
+                                    <h3 class="page-title mt-3">Tampilan Proses</h3>
+                                    @if(isset($flattenpenugasan))
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                            <thead class="student-thread">
+                                                <tr>
+                                                    <th>Generasi</th>
+                                                    <th>Individu</th>
+                                                    <th>Fitness</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($flattenpenugasan as $penugasan)
+                                                <tr>
+                                                    <td>P{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        @foreach($penugasan as $individu)
+                                                        {{ $individu }}
+                                                        @endforeach
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @endif
+                                    {{-- @if(isset($flattenpenugasan))
+                                    <ul>
+                                        @foreach($flattenpenugasan as $item)
+                                        generasi ke-{{ $loop->iteration }}
+                                        @foreach($item as $item2)
+                                        {{ $item2 }}
+                                        @endforeach
+                                        <br>
+                                        @endforeach
+                                    </ul>
+                                    @endif --}}
 
                                 </div>
                                 <div class="tab-pane" id="bottom-tab2">

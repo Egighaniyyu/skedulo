@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 {{-- apabila 1 baris --}}
-@section('title' , 'Dashboard')
+@section('title' , 'Mata Pelajaran')
 
 @push('page-css')
 <link rel="stylesheet" href="assets/plugins/datatables/datatables.min.css">
@@ -14,34 +14,15 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title">Teachers</h3>
+                    <h3 class="page-title">Data Mata Pelajaran</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Teachers</li>
+                        <li class="breadcrumb-item active">Data Mata Pelajaran</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="student-group-form">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Cari berdasarkan ID ...">
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Cari berdasarkan Mata Pelajaran ...">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="search-student-btn">
-                        <button type="btn" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card card-table">
@@ -50,7 +31,7 @@
                         <div class="page-header">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h3 class="page-title">Mata Pelajaran</h3>
+                                    <h3 class="page-title">Informasi Mata Pelajaran</h3>
                                 </div>
                                 <div class="col-auto text-end float-end ms-auto download-grp">
                                     <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
