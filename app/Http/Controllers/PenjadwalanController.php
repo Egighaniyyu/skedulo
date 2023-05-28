@@ -146,7 +146,6 @@ class PenjadwalanController extends Controller
                             // $duplicate_mapel[$k] = [$double_mapel];
                         }
                     }
-                    // $double_mapel = 0;
                 }
                 $collect_data_mapel[$j] = $data_mingguan_mapel;
                 $collect_data_guru[$j] = $data_mingguan_guru;
@@ -156,36 +155,60 @@ class PenjadwalanController extends Controller
             $collect_data_individu[$i] = $collect_data_guru;
             $collect_double_mapel[$i] = $double_mapel;
             $fitness_guru[$i] = $collection_guru;
+            $double_mapel = 0;
         }
         //* end generate individu
 
         //* hitung fitness
         for ($k = 0; $k < $jum_idv; $k++) {
-            for ($l = 0; $l <= (count($data_guru[$k]) - 1); $l++) {
+            for ($l = 0; $l <= (count($data_guru[0]) - 1); $l++) {
                 for ($m = 0; $m <= (count($jum_kelas) - 1); $m++) {
                     $col_guru[$m] = collect($array_guru);
                     $col_guru[$m]->push($fitness_guru[$k][$m][$l]);
                 }
                 $col_kelas[$l] = collect($col_guru)->flatten()->toArray();
 
-                // filter data mapel yang sama dalam 1 hari
-                $counted_guru[$l] = array_count_values($col_kelas[$l]);
-                $filtered_guru[$l] = array_filter($counted_guru[$l], function ($value) {
-                    return $value > 2;
-                });
-
-                if (!empty($filtered_guru[$l])) {
-                    $clash_guru += 1;
-                    // $duplicate_guru[$l] = [$clash_guru];
-                }
+                // $col_kelas[$l] = [[1, 1, 1, 2, 2, 1, 1, 1]];
+                $counted_guru[$l] = collect($col_kelas[$l])->countBy();
+                $filtered_guru[$l] = $counted_guru[$l]->filter(function ($value) {
+                    return $value > 1;
+                })->keys();
             }
-            // $fitness_idv[$k] = $col_kelas; // buat dapet data guru mengajar per jam belajar
-            $collect_clash_guru[$k] = $clash_guru;
-            $clash_guru = 0;
+            $collect_clash_guru[$k] = count($filtered_guru);
+        }
+
+        for ($i = 0; $i < $jum_idv; $i++) {
+            $fitness_value[$i] = 1 / (1 + $collect_double_mapel[$i] + $collect_clash_guru[$i]);
         }
         //* end hitung fitness
 
-        // dd($fitness_idv);
-        return $collect_clash_guru;
+        //*seleksi
+        // mencari nilai probabilitas
+        // $total_fitness = array_sum($fitness_value);
+        // $probabilitas = array();
+        // for ($i = 0; $i < $jum_idv; $i++) {
+        //     $probabilitas[$i] = $fitness_value[$i] / $total_fitness;
+        // }
+
+        // // mencari nilai kumulatif
+        // $kumulatif = array();
+        // for ($i = 0; $i < $jum_idv; $i++) {
+        //     if ($i <= 0) {
+        //         $kumulatif[$i] = $probabilitas[$i];
+        //     } else {
+        //         $kumulatif[$i] = $kumulatif[$i - 1] + $probabilitas[$i];
+        //     }
+        // }
+
+        // // mencari nilai random
+        // $random = array();
+        // for ($i = 0; $i < $jum_idv; $i++) {
+        //     $random[$i] = rand(0, 1);
+        // }
+
+        // dd(array_sum($fitness_value));
+        // dd($col_kelas);
+        // return $collect_double_mapel;
+        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value'));
     }
 }

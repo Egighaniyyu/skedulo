@@ -108,7 +108,9 @@
                                                         {{ $individu }}
                                                         @endforeach
                                                     </td>
-                                                    <td></td>
+                                                    <td>
+                                                        {{ $fitness_value[($loop->iteration)-1] }}
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
