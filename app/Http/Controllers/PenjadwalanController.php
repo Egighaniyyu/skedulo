@@ -168,7 +168,6 @@ class PenjadwalanController extends Controller
                 }
                 $col_kelas[$l] = collect($col_guru)->flatten()->toArray();
 
-                // $col_kelas[$l] = [[1, 1, 1, 2, 2, 1, 1, 1]];
                 $counted_guru[$l] = collect($col_kelas[$l])->countBy();
                 $filtered_guru[$l] = $counted_guru[$l]->filter(function ($value) {
                     return $value > 1;
@@ -184,31 +183,49 @@ class PenjadwalanController extends Controller
 
         //*seleksi
         // mencari nilai probabilitas
-        // $total_fitness = array_sum($fitness_value);
-        // $probabilitas = array();
-        // for ($i = 0; $i < $jum_idv; $i++) {
-        //     $probabilitas[$i] = $fitness_value[$i] / $total_fitness;
-        // }
+        $total_fitness = array_sum($fitness_value);
+        $probabilitas = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            $probabilitas[$i] = $fitness_value[$i] / $total_fitness;
+        }
 
-        // // mencari nilai kumulatif
-        // $kumulatif = array();
-        // for ($i = 0; $i < $jum_idv; $i++) {
-        //     if ($i <= 0) {
-        //         $kumulatif[$i] = $probabilitas[$i];
-        //     } else {
-        //         $kumulatif[$i] = $kumulatif[$i - 1] + $probabilitas[$i];
-        //     }
-        // }
+        // mencari nilai kumulatif
+        $kumulatif = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            if ($i <= 0) {
+                $kumulatif[$i] = $probabilitas[$i];
+            } else {
+                $kumulatif[$i] = $kumulatif[$i - 1] + $probabilitas[$i];
+            }
+        }
 
-        // // mencari nilai random
-        // $random = array();
-        // for ($i = 0; $i < $jum_idv; $i++) {
-        //     $random[$i] = rand(0, 1);
-        // }
+        // mencari nilai random
+        $random = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            $random[$i] = mt_rand() / mt_getrandmax();
+        }
 
-        // dd(array_sum($fitness_value));
-        // dd($col_kelas);
-        // return $collect_double_mapel;
-        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value'));
+        // pengecekan terhadap nilai interval
+        $interval = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            for ($j = 0; $j < $jum_idv; $j++) {
+                if ($j <= 0) {
+                    if ($random[$i] <= $kumulatif[$j]) {
+                        $interval[$i] = $j;
+                        break;
+                    }
+                } else {
+                    if ($random[$i] > $kumulatif[$j - 1] && $random[$i] <= $kumulatif[$j]) {
+                        $interval[$i] = $j;
+                        break;
+                    }
+                }
+            }
+        }
+        //* end seleksi
+
+        // dd($interval);
+
+        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval'));
     }
 }

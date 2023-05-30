@@ -89,6 +89,7 @@
                                     </div>
                                     <h3 class="page-title mt-3">Tampilan Proses</h3>
                                     @if(isset($flattenpenugasan))
+                                    <h3 class="page-title mt-3">Generasi 1</h3>
                                     <div class="table-responsive">
                                         <table
                                             class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
@@ -97,6 +98,9 @@
                                                     <th>Generasi</th>
                                                     <th>Individu</th>
                                                     <th>Fitness</th>
+                                                    <th>Probabilitas</th>
+                                                    <th>Kumulatif</th>
+                                                    <th>Random</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -111,24 +115,25 @@
                                                     <td>
                                                         {{ $fitness_value[($loop->iteration)-1] }}
                                                     </td>
+                                                    <td>
+                                                        {{ $probabilitas[($loop->iteration)-1] }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $kumulatif[($loop->iteration)-1] }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $random[($loop->iteration)-1] }}
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
                                     </div>
+                                    <h5 class="mt-4">Individu Hasil Proses Seleksi</h5>
+                                    @foreach ($interval as $interval)
+                                    <p>S{{$loop->iteration}} = <span>P{{$interval}}</span></p>
+                                    @endforeach
                                     @endif
-                                    {{-- @if(isset($flattenpenugasan))
-                                    <ul>
-                                        @foreach($flattenpenugasan as $item)
-                                        generasi ke-{{ $loop->iteration }}
-                                        @foreach($item as $item2)
-                                        {{ $item2 }}
-                                        @endforeach
-                                        <br>
-                                        @endforeach
-                                    </ul>
-                                    @endif --}}
-
                                 </div>
                                 <div class="tab-pane" id="bottom-tab2">
                                     Coming soon
