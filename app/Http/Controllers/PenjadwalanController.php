@@ -222,10 +222,67 @@ class PenjadwalanController extends Controller
                 }
             }
         }
+
+        // individu baru hasil seleksi
+        $individu_seleksi = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            $individu_seleksi[$i] = $flattenpenugasan[$interval[$i]];
+        }
         //* end seleksi
 
-        // dd($interval);
+        //* crossover
+        $cr_rate = $request->crossover_rate;
+        if (empty($cr_rate)) {
+            $cr_rate = 0.75;
+        } else {
+            $cr_rate = (int)$cr_rate / 100;
+        }
 
-        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval'));
+        // mencari nilai random
+        $random_cr = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            $random_cr[$i] = mt_rand() / mt_getrandmax();
+        }
+
+        // set parent crossover
+        $interval_cr = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            if ($random_cr[$i] <= $cr_rate) {
+                $interval_cr[$i] = 1;
+            } else {
+                $interval_cr[$i] = 0;
+            }
+        }
+
+        // individu yang akan dijadikan parent crossover
+        $individu_crossover = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            if ($interval_cr[$i] == 1) {
+                $individu_crossover[$i] = $individu_seleksi[$i];
+            } else {
+                $individu_crossover[$i] = $individu_seleksi[$i];
+            }
+        }
+
+        $indexes = array_keys($interval_cr, 1);
+
+        // tampilkan individu crossover yang dengan interval_cr = 1
+        $individu_crossover = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            if ($interval_cr[$i] == 1) {
+                $individu_crossover[$i] = $individu_seleksi[$i];
+            }
+        }
+
+        // menentukan titik potong crossover secara random
+        $titik_potong = array();
+        for ($i = 0; $i < $jum_idv; $i++) {
+            $titik_potong[$i] = mt_rand(0, count($flattenpenugasan[0]) - 1);
+        }
+
+        //* end crossover
+        // dd($indexes);
+
+        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval', 'individu_seleksi', 'random_cr', 'interval_cr', 'individu_crossover', 'indexes'));
     }
 }

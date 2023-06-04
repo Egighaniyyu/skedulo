@@ -23,7 +23,7 @@ class JamBelajarSeeder extends Seeder
         ]);
         JamBelajar::create([
             'hari' => 'Rabu',
-            'jumlah_jam' => 11,
+            'jumlah_jam' => 10,
         ]);
         JamBelajar::create([
             'hari' => 'Kamis',

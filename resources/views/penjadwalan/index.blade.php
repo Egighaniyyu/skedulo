@@ -95,8 +95,8 @@
                                             class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
                                             <thead class="student-thread">
                                                 <tr>
-                                                    <th>Generasi</th>
-                                                    <th>Individu</th>
+                                                    <th>Individu Ke-</th>
+                                                    <th>Kromosom</th>
                                                     <th>Fitness</th>
                                                     <th>Probabilitas</th>
                                                     <th>Kumulatif</th>
@@ -131,9 +131,66 @@
                                     </div>
                                     <h5 class="mt-4">Individu Hasil Proses Seleksi</h5>
                                     @foreach ($interval as $interval)
-                                    <p>S{{$loop->iteration}} = <span>P{{$interval}}</span></p>
+                                    <p>S{{$loop->iteration}} = <span>P{{$interval + 1}}</span></p>
                                     @endforeach
+
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                            <thead class="student-thread">
+                                                <tr>
+                                                    <th>Individu Ke-</th>
+                                                    <th>Kromosom</th>
+                                                    <th>Random</th>
+                                                    <th>Interval</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($individu_seleksi as $individu_seleksi)
+                                                <tr>
+                                                    <td>P{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        @foreach ($individu_seleksi as $individu_seleksi)
+                                                        {{ $individu_seleksi }}
+                                                        @endforeach
+                                                    </td>
+                                                    <td>
+                                                        {{ $random_cr[($loop->iteration)-1] }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $interval_cr[($loop->iteration)-1] }}
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                            <thead class="student-thread">
+                                                <tr>
+                                                    <th>Individu Ke-</th>
+                                                    <th>Kromosom</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($individu_crossover as $individu_crossover)
+                                                <tr>
+                                                    <td>P{{ $indexes[($loop->iteration)-1] + 1 }}</td>
+                                                    <td>
+                                                        @foreach ($individu_crossover as $individu_crossover)
+                                                        {{ $individu_crossover }}
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     @endif
+
                                 </div>
                                 <div class="tab-pane" id="bottom-tab2">
                                     Coming soon
