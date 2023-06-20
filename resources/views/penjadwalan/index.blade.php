@@ -217,6 +217,31 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <h5 class="mt-4">Individu Baru Hasil Crossover</h5>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                            <thead class="student-thread">
+                                                <tr>
+                                                    <th>Individu Ke-</th>
+                                                    <th>Kromosom</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($individu_crossover_new as $individu_crossover_new)
+                                                <tr>
+                                                    <td>P{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        @foreach ($individu_crossover_new as $individu_crossover_new)
+                                                        {{ $individu_crossover_new }}
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     @endif
 
                                 </div>

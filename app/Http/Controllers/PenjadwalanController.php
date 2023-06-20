@@ -287,10 +287,10 @@ class PenjadwalanController extends Controller
         if ($numarray == 0) {
             echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
             $titik_potong[0] = 0;
-        } else if ($numarray == 1){
+        } else if ($numarray == 1) {
             $child = $parent;
             $titik_potong[0] = [0];
-        } else if($numarray >= 2) {
+        } else if ($numarray >= 2) {
             for ($i = 0; $i < $loopnum; $i++) {
                 $parent1 = $parent[$i];
                 $a = ($i + 1) % $loopnum;
@@ -305,6 +305,21 @@ class PenjadwalanController extends Controller
             $titik_potong[0] = 0;
         }
 
-        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval', 'individu_seleksi', 'random_cr', 'interval_cr', 'individu_crossover_parent', 'indexes', 'titik_potong', 'child'));
+        // menggabungkan individu crossover dengan individu yang tidak dijadikan parent crossover
+        $arrayKeys = array_keys($individu_crossover);
+        $individu_crossover_new= array();
+        for ($i = 0; $i < count($arrayKeys); $i++) {
+            $key = $arrayKeys[$i];
+            if (array_key_exists($key, $child)) {
+                $individu_crossover[$key] = $child[$key];
+            }
+            $individu_crossover_new[$i] = $individu_crossover[$key];
+        }
+
+        // dd($individu_crossover_parent);
+
+        // dd($individu_crossover);
+
+        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval', 'individu_seleksi', 'random_cr', 'interval_cr', 'individu_crossover_parent', 'indexes', 'titik_potong', 'child', 'individu_crossover_new' ));
     }
 }
