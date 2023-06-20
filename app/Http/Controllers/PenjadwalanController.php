@@ -6,6 +6,7 @@ use App\Models\Penjadwalan;
 use App\Models\Penugasan;
 use App\Models\JamBelajar;
 use App\Models\Ruangan;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 
 use function PHPSTORM_META\type;
@@ -264,25 +265,46 @@ class PenjadwalanController extends Controller
             }
         }
 
+        // mendapatkan index array yang bernilai 1
         $indexes = array_keys($interval_cr, 1);
 
         // tampilkan individu crossover yang dengan interval_cr = 1
-        $individu_crossover = array();
+        $individu_crossover_parent = array();
         for ($i = 0; $i < $jum_idv; $i++) {
             if ($interval_cr[$i] == 1) {
-                $individu_crossover[$i] = $individu_seleksi[$i];
+                $individu_crossover_parent[$i] = $individu_seleksi[$i];
             }
         }
 
+        // membuat key baru untuk array individu_crossover_parent
+        $parent = array_values($individu_crossover_parent);
+
         // menentukan titik potong crossover secara random
         $titik_potong = array();
-        for ($i = 0; $i < $jum_idv; $i++) {
-            $titik_potong[$i] = mt_rand(0, count($flattenpenugasan[0]) - 1);
+        $numarray = count($parent);
+        $loopnum = $numarray;
+        $child = array();
+        if ($numarray == 0) {
+            echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
+            $titik_potong[0] = 0;
+        } else if ($numarray == 1){
+            $child = $parent;
+            $titik_potong[0] = [0];
+        } else if($numarray >= 2) {
+            for ($i = 0; $i < $loopnum; $i++) {
+                $parent1 = $parent[$i];
+                $a = ($i + 1) % $loopnum;
+                $parent2 = $parent[$a];
+                $titik_potong[$i] = mt_rand(1, count($parent[0]) - 1);
+
+                $children = array_merge(array_slice($parent1, 0, $titik_potong[$i]), array_slice($parent2, $titik_potong[$i]));
+                $child[$i] = $children;
+            }
+        } else {
+            echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
+            $titik_potong[0] = 0;
         }
 
-        //* end crossover
-        // dd($indexes);
-
-        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval', 'individu_seleksi', 'random_cr', 'interval_cr', 'individu_crossover', 'indexes'));
+        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval', 'individu_seleksi', 'random_cr', 'interval_cr', 'individu_crossover_parent', 'indexes', 'titik_potong', 'child'));
     }
 }

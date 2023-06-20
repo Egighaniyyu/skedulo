@@ -166,6 +166,34 @@
                                         </table>
                                     </div>
 
+                                    <h5 class="mt-4">Parent Proses Crossover</h5>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                            <thead class="student-thread">
+                                                <tr>
+                                                    <th>Individu Ke-</th>
+                                                    <th>Kromosom</th>
+                                                    <th>Titik Potong</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($individu_crossover_parent as $individu_crossover_parent)
+                                                <tr>
+                                                    <td>P{{ $indexes[($loop->iteration)-1] + 1 }}</td>
+                                                    <td>
+                                                        @foreach ($individu_crossover_parent as $individu_crossover_parent)
+                                                        {{ $individu_crossover_parent }}
+                                                        @endforeach
+                                                    </td>
+                                                    <td>{{$titik_potong[($loop->iteration)-1]}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h5 class="mt-4">Individu Hasil Proses Crossover</h5>
                                     <div class="table-responsive">
                                         <table
                                             class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
@@ -176,12 +204,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($individu_crossover as $individu_crossover)
+                                                @foreach ($child as $child)
                                                 <tr>
                                                     <td>P{{ $indexes[($loop->iteration)-1] + 1 }}</td>
                                                     <td>
-                                                        @foreach ($individu_crossover as $individu_crossover)
-                                                        {{ $individu_crossover }}
+                                                        @foreach ($child as $child)
+                                                        {{ $child }}
                                                         @endforeach
                                                     </td>
                                                 </tr>
