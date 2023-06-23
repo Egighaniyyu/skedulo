@@ -204,12 +204,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($child as $child)
+                                                @foreach ($children as $children)
                                                 <tr>
                                                     <td>P{{ $indexes[($loop->iteration)-1] + 1 }}</td>
                                                     <td>
-                                                        @foreach ($child as $child)
-                                                        {{ $child }}
+                                                        @foreach ($children as $children)
+                                                        {{ $children }}
                                                         @endforeach
                                                     </td>
                                                 </tr>
@@ -235,6 +235,35 @@
                                                     <td>
                                                         @foreach ($individu_crossover_new as $individu_crossover_new)
                                                         {{ $individu_crossover_new }}
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h5 class="mt-4">Individu Hasil Mutasi</h5>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                            <thead class="student-thread">
+                                                <tr>
+                                                    <th>Individu Ke-</th>
+                                                    <th>Index mutasi 1</th>
+                                                    <th>Index mutasi 2</th>
+                                                    <th>Kromosom</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($individu_mutasi as $individu_mutasi)
+                                                <tr>
+                                                    <td>P{{ $loop->iteration }}</td>
+                                                    <td>{{$index1[($loop->iteration)-1]}}</td>
+                                                    <td>{{$index2[($loop->iteration)-1]}}</td>
+                                                    <td>
+                                                        @foreach ($individu_mutasi as $individu_mutasi)
+                                                        {{ $individu_mutasi }}
                                                         @endforeach
                                                     </td>
                                                 </tr>

@@ -291,14 +291,62 @@ class PenjadwalanController extends Controller
             $child = $parent;
             $titik_potong[0] = [0];
         } else if ($numarray >= 2) {
-            for ($i = 0; $i < $loopnum; $i++) {
-                $parent1 = $parent[$i];
-                $a = ($i + 1) % $loopnum;
-                $parent2 = $parent[$a];
-                $titik_potong[$i] = mt_rand(1, count($parent[0]) - 1);
+            // backup crossover
+            // for ($i = 0; $i < $loopnum; $i++) {
+            //     $parent1 = $parent[$i];
+            //     $parent2 = $parent[($i + 1) % $loopnum];
+            //     $titik_potong[$i] = mt_rand(1, count($parent[0]) - 1);
 
-                $children = array_merge(array_slice($parent1, 0, $titik_potong[$i]), array_slice($parent2, $titik_potong[$i]));
-                $child[$i] = $children;
+            //     $parentLeft = array_slice($parent1, 0, $titik_potong[$i]);
+            //     $parentRight = array();
+            //     foreach (array_slice($parent2, $titik_potong[$i]) as $gene) {
+            //         if (!in_array($gene, $parentLeft)) {
+            //             $parentRight[] = $gene;
+            //         }
+            //     }
+
+            //     $children = array_merge($parentLeft, $parentRight);
+            //     $child[$i] = $children;
+            // }
+            // end backup crossover
+
+            $numParents = count($parent);
+            $numGenes = count($parent[0]);
+            $children = [];
+
+            for ($i = 0; $i < $numParents; $i++) {
+                // Menentukan indeks parent berikutnya dalam urutan kawin silang
+                $nextParentIndex = ($i + 1) % $numParents;
+
+                // Menentukan titik potong secara acak
+                $titik_potong[$i] = rand(0, $numGenes - 1);
+
+                // Salin gen hingga titik potong
+                $child = array_slice($parent[$i], 0, $titik_potong[$i]);
+
+                // Salin gen yang unik dari parent berikutnya
+                $j = count($child);
+                for ($k = 0; $k < $numGenes; $k++) {
+                    if (!in_array($parent[$nextParentIndex][$k], $child)) {
+                        $child[$j] = $parent[$nextParentIndex][$k];
+                        $j++;
+                    }
+                }
+
+                // Lengkapi child dengan gen yang hilang
+                for ($k = 0; $k < $numGenes; $k++) {
+                    if (!in_array($child[$k], $child)) {
+                        for ($l = 0; $l < $numGenes; $l++) {
+                            if (!in_array($parent[$i][$l], $child)) {
+                                $child[$k] = $parent[$i][$l];
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Menambahkan child yang dihasilkan ke dalam populasi anak
+                $children[] = $child;
             }
         } else {
             echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
@@ -307,19 +355,59 @@ class PenjadwalanController extends Controller
 
         // menggabungkan individu crossover dengan individu yang tidak dijadikan parent crossover
         $arrayKeys = array_keys($individu_crossover);
-        $individu_crossover_new= array();
+        $individu_crossover_new = array();
         for ($i = 0; $i < count($arrayKeys); $i++) {
             $key = $arrayKeys[$i];
-            if (array_key_exists($key, $child)) {
-                $individu_crossover[$key] = $child[$key];
+            if (array_key_exists($key, $children)) {
+                $individu_crossover[$key] = $children[$key];
             }
             $individu_crossover_new[$i] = $individu_crossover[$key];
         }
+        //* end crossover
 
-        // dd($individu_crossover_parent);
+        //* mutasi
+        $mutatedArray = $individu_crossover_new;
+        // $length = count($individu_crossover_new[0]);
+        $mutation_rate = $request->mutation_rate;
+        $individu_mutasi = array();
+        $index1 = array();
+        $index2 = array();
+
+        if (empty($mutation_rate)) {
+            $mutation_rate = 0.25;
+        } else {
+            $mutation_rate = (int)$mutation_rate / 100;
+        }
+
+        for ($i = 0; $i < count($individu_crossover_new); $i++) {
+
+            if (mt_rand() / mt_getrandmax() < $mutation_rate) {
+                $index1[$i] = array_rand($individu_crossover_new[$i]);
+                $index2[$i] = array_rand($individu_crossover_new[$i]);
+
+                // Pastikan kedua indeks yang dipilih berbeda
+                while ($index2[$i] == $index1[$i]) {
+                    $index2[$i] = array_rand($individu_crossover_new[$i]);
+                }
+
+                // Menukar nilai antara kedua indeks
+                $temp = $mutatedArray[$i][$index1[$i]];
+                $mutatedArray[$i][$index1[$i]] = $mutatedArray[$i][$index2[$i]];
+                $mutatedArray[$i][$index2[$i]] = $temp;
+            } else {
+                $index1[$i] = 'Tidak dilakukan mutasi';
+                $index2[$i] = 'Tidak dilakukan mutasi';
+            }
+            $individu_mutasi[$i] = collect($mutatedArray[$i])->flatten()->toArray();
+        }
+        //* end mutasi
+
+
+        // dd($individu_crossover_new);
+        // dd($index1);
 
         // dd($individu_crossover);
 
-        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval', 'individu_seleksi', 'random_cr', 'interval_cr', 'individu_crossover_parent', 'indexes', 'titik_potong', 'child', 'individu_crossover_new' ));
+        return view('penjadwalan.index', compact('flattenpenugasan', 'fitness_value', 'probabilitas', 'kumulatif', 'random', 'interval', 'individu_seleksi', 'random_cr', 'interval_cr', 'individu_crossover_parent', 'indexes', 'titik_potong', 'children', 'individu_crossover_new', 'individu_mutasi', 'index1', 'index2'));
     }
 }
