@@ -53,12 +53,12 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Jumlah Individu</label>
-                                                <input type="text" class="form-control" name="jum_individu"
+                                                <input type="number" class="form-control" name="jum_individu"
                                                     placeholder="Masukan jumlah individu">
                                             </div>
                                             <div class="form-group">
                                                 <label>Maksimal Generasi</label>
-                                                <input type="text" class="form-control" name="max_generasi"
+                                                <input type="number" class="form-control" name="max_generasi"
                                                     placeholder="Masukan maksimal generasi">
                                             </div>
                                         </div>
@@ -89,7 +89,8 @@
                                     </div>
                                     <h3 class="page-title mt-3">Tampilan Proses</h3>
                                     @if(isset($flattenpenugasan))
-                                    <h3 class="page-title mt-3">Generasi 1</h3>
+                                    @foreach ($result as $data)
+                                    <h3 class="page-title mt-3">Generasi {{$data['iterasi']}}</h3>
                                     <div class="table-responsive">
                                         <table
                                             class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
@@ -104,25 +105,24 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($flattenpenugasan as $penugasan)
+                                                {{-- @foreach ($flattenpenugasan as $penugasan) --}}
+                                                @foreach ($data['individu'] as $i => $individu)
                                                 <tr>
-                                                    <td>P{{ $loop->iteration }}</td>
+                                                    <td>P{{ $i }}</td>
                                                     <td>
-                                                        @foreach($penugasan as $individu)
-                                                        {{ $individu }}
-                                                        @endforeach
+                                                        {{implode(", ", $individu)}}
                                                     </td>
                                                     <td>
-                                                        {{ $fitness_value[($loop->iteration)-1] }}
+                                                        {{ $data['fitness_value'][$i] }}
                                                     </td>
                                                     <td>
-                                                        {{ $probabilitas[($loop->iteration)-1] }}
+                                                        {{ $data['probabilitas'][$i] }}
                                                     </td>
                                                     <td>
-                                                        {{ $kumulatif[($loop->iteration)-1] }}
+                                                        {{ $data['kumulatif'][$i] }}
                                                     </td>
                                                     <td>
-                                                        {{ $random[($loop->iteration)-1] }}
+                                                        {{ $data['random'][$i] }}
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -130,8 +130,9 @@
                                         </table>
                                     </div>
                                     <h5 class="mt-4">Individu Hasil Proses Seleksi</h5>
-                                    @foreach ($interval as $interval)
-                                    <p>S{{$loop->iteration}} = <span>P{{$interval + 1}}</span></p>
+                                    @foreach ($data['iterasi'] as $i => $interval)
+                                    {{-- <p>S{{$interval}} = <span>P{{$interval + 1}}</span></p> --}}
+                                    <p>S{{$i}} = P{{$data['interval'][$i]}}</p>
                                     @endforeach
 
                                     <div class="table-responsive">
@@ -271,6 +272,7 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    @endforeach
                                     @endif
 
                                 </div>
