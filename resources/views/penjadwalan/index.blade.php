@@ -89,7 +89,8 @@
                                     </div>
                                     <h3 class="page-title mt-3">Tampilan Proses</h3>
                                     @if(isset($flattenpenugasan))
-                                    <h3 class="page-title mt-3">Generasi 1</h3>
+                                    @foreach ($result as $data)
+                                    <h3 class="page-title mt-3">Generasi {{$data['iterasi']}}</h3>
                                     <div class="table-responsive">
                                         <table
                                             class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
@@ -104,7 +105,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($flattenpenugasan as $penugasan)
+                                                @foreach ($data['individu'] as $penugasan)
                                                 <tr>
                                                     <td>P{{ $loop->iteration }}</td>
                                                     <td>
@@ -113,24 +114,25 @@
                                                         @endforeach
                                                     </td>
                                                     <td>
-                                                        {{ $fitness_value[($loop->iteration)-1] }}
+                                                        {{ $data['fitness_value'][($loop->iteration)-1] }}
                                                     </td>
                                                     <td>
-                                                        {{ $probabilitas[($loop->iteration)-1] }}
+                                                        {{ $data['probabilitas'][($loop->iteration)-1] }}
                                                     </td>
                                                     <td>
-                                                        {{ $kumulatif[($loop->iteration)-1] }}
+                                                        {{ $data['kumulatif'][($loop->iteration)-1] }}
                                                     </td>
                                                     <td>
-                                                        {{ $random[($loop->iteration)-1] }}
+                                                        {{ $data['random'][($loop->iteration)-1] }}
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
                                     </div>
+
                                     <h5 class="mt-4">Individu Hasil Proses Seleksi</h5>
-                                    @foreach ($interval as $interval)
+                                    @foreach ($data['interval'] as $interval)
                                     <p>S{{$loop->iteration}} = <span>P{{$interval + 1}}</span></p>
                                     @endforeach
 
@@ -146,7 +148,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($individu_seleksi as $individu_seleksi)
+                                                @foreach ($data['individu_seleksi'] as $individu_seleksi)
                                                 <tr>
                                                     <td>P{{ $loop->iteration }}</td>
                                                     <td>
@@ -155,10 +157,10 @@
                                                         @endforeach
                                                     </td>
                                                     <td>
-                                                        {{ $random_cr[($loop->iteration)-1] }}
+                                                        {{ $data['random_cr'][($loop->iteration)-1] }}
                                                     </td>
                                                     <td>
-                                                        {{ $interval_cr[($loop->iteration)-1] }}
+                                                        {{ $data['interval_cr'][($loop->iteration)-1] }}
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -178,15 +180,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($individu_crossover_parent as $individu_crossover_parent)
+                                                @foreach ($data['individu_crossover_parent'] as $individu_crossover_parent)
                                                 <tr>
-                                                    <td>P{{ $indexes[($loop->iteration)-1] + 1 }}</td>
+                                                    <td>P{{ $data['indexes'][($loop->iteration)-1] + 1 }}</td>
                                                     <td>
                                                         @foreach ($individu_crossover_parent as $individu_crossover_parent)
                                                         {{ $individu_crossover_parent }}
                                                         @endforeach
                                                     </td>
-                                                    <td>{{$titik_potong[($loop->iteration)-1]}}</td>
+                                                    <td>{{$data['titik_potong'][($loop->iteration)-1]}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -204,9 +206,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($children as $children)
+                                                @foreach ($data['children'] as $children)
                                                 <tr>
-                                                    <td>P{{ $indexes[($loop->iteration)-1] + 1 }}</td>
+                                                    <td>P{{ $data['indexes'][($loop->iteration)-1] + 1 }}</td>
                                                     <td>
                                                         @foreach ($children as $children)
                                                         {{ $children }}
@@ -229,7 +231,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($individu_crossover_new as $individu_crossover_new)
+                                                @foreach ($data['individu_crossover_new'] as $individu_crossover_new)
                                                 <tr>
                                                     <td>P{{ $loop->iteration }}</td>
                                                     <td>
@@ -256,11 +258,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($individu_mutasi as $individu_mutasi)
+                                                @foreach ($data['individu_mutasi'] as $individu_mutasi)
                                                 <tr>
                                                     <td>P{{ $loop->iteration }}</td>
-                                                    <td>{{$index1[($loop->iteration)-1]}}</td>
-                                                    <td>{{$index2[($loop->iteration)-1]}}</td>
+                                                    <td>{{$data['index1'][($loop->iteration)-1]}}</td>
+                                                    <td>{{$data['index2'][($loop->iteration)-1]}}</td>
                                                     <td>
                                                         @foreach ($individu_mutasi as $individu_mutasi)
                                                         {{ $individu_mutasi }}
@@ -271,6 +273,8 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    @endforeach
+                                    
                                     @endif
 
                                 </div>
