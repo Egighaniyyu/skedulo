@@ -8,6 +8,7 @@ use App\Models\JamBelajar;
 use App\Models\Ruangan;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 use function PHPSTORM_META\type;
 
@@ -316,6 +317,7 @@ class PenjadwalanController extends Controller
             }
 
             // mendapatkan index array yang bernilai 1
+            $indexes = array();
             $indexes = array_keys($interval_cr, 1);
 
             // tampilkan individu crossover yang dengan interval_cr = 1
@@ -326,24 +328,29 @@ class PenjadwalanController extends Controller
                 }
             }
 
+
             // membuat key baru untuk array individu_crossover_parent
             $parent = array_values($individu_crossover_parent);
 
             // menentukan titik potong crossover secara random
             $titik_potong = array();
             $numParents = count($parent);
-            $numChildren = $numParents;
-            $child = array();
             $children = array();
+            $parent1 = array();
+            $parent2 = array();
+            $counts = array();
+            $array = array();
+            $key = 0;
             if ($numParents == 0) {
-                echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
+                // echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
+                $children = $parent;
                 $titik_potong[0] = 0;
             } else if ($numParents == 1) {
                 $children = $parent;
                 $titik_potong[0] = 0;
             } else if ($numParents >= 2) {
 
-                $children = array();
+                // $children = array();
                 $childTemp = array();
 
                 for ($i = 0; $i < $numParents; $i++) {
@@ -357,11 +364,7 @@ class PenjadwalanController extends Controller
                     $parentRight = array_slice($parent2, $titik_potong[0]);
                     $childTemp = array_merge($parentLeft, $parentRight);
 
-                    // $parentLeft = array_slice($parent1, $titik_potong[0]);
-                    // $parentRight = array_slice($parent2, 0, $titik_potong[0]);
-                    // $children = array_merge($parentRight, $parentLeft);
                     $array = $childTemp;
-                    // dd($parent1, $parent2, $titik_potong, $array);
 
                     // cek nilai yang sama
                     $counts = array_count_values($array);
@@ -374,36 +377,36 @@ class PenjadwalanController extends Controller
                         }
                     }
 
-                    $newValue = 1;
-                    foreach ($repeatedValues as $repeatedValue) {
-                        while (in_array($newValue, $array)) {
-                            $newValue++;
+                    if (count($repeatedValues) >= 1) {
+                        $newValue = 1;
+                        foreach ($repeatedValues as $repeatedValue) {
+                            while (in_array($newValue, $array)) {
+                                $newValue++;
+                                if ($newValue > count($array) + count($repeatedValues)) {
+                                    // Jika semua nilai 1-15 sudah ada dalam array
+                                    // Anda dapat menambahkan penanganan khusus di sini
+                                    // Misalnya, keluar dari perulangan atau menampilkan pesan error
+                                    break;
+                                }
+                            }
                             if ($newValue > count($array) + count($repeatedValues)) {
-                                // Jika semua nilai 1-15 sudah ada dalam array
-                                // Anda dapat menambahkan penanganan khusus di sini
-                                // Misalnya, keluar dari perulangan atau menampilkan pesan error
                                 break;
                             }
+                            $key = array_search($repeatedValue, $array);
+
+                            $array[$key] = $newValue;
+                            $children[$i] = $array;
                         }
-                        if ($newValue > count($array) + count($repeatedValues)) {
-                            break;
-                        }
-                        $key = array_search($repeatedValue, $array);
-                        $array[$key] = $newValue;
+                    } else {
                         $children[$i] = $array;
                     }
-                    // dd($children);
-
-                    // $arrayLeft = array_slice($array, $titik_potong[0]);
-                    // $arrayRight = array_slice($array, 0, $titik_potong[0]);
-                    // $childrenNew = array_merge($arrayRight, $arrayLeft);
-                    // dd($parent1, $parent2, $titik_potong, $childrenNew);
-
                 }
             } else {
-                echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
+                // echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
+                $children = $parent;
                 $titik_potong[0] = 0;
             }
+
 
             // menggabungkan individu crossover dengan individu yang tidak dijadikan parent crossover
             $arrayKeys = array_keys($individu_crossover);
@@ -428,12 +431,12 @@ class PenjadwalanController extends Controller
             if (empty($mutation_rate)) {
                 $mutation_rate = 0.25;
             } else {
-                $mutation_rate = (int)$mutation_rate / 100;
+                $mutation_rate = $mutation_rate / 100;
             }
 
             for ($i = 0; $i < count($individu_crossover_new); $i++) {
 
-                if ($probabilitas[$i] < $mutation_rate) {
+                if ((mt_rand() * mt_getrandmax()) < $mutation_rate) {
                     $index1[$i] = array_rand($individu_crossover_new[$i]);
                     $index2[$i] = array_rand($individu_crossover_new[$i]);
 
@@ -480,7 +483,7 @@ class PenjadwalanController extends Controller
 
 
         // dd($result);
-        return $result;
+        // return $result;
 
         return view('penjadwalan.index', compact('result'));
     }

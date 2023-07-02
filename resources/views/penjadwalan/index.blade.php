@@ -53,12 +53,12 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Jumlah Individu</label>
-                                                <input type="text" class="form-control" name="jum_individu"
+                                                <input type="number" class="form-control" name="jum_individu"
                                                     placeholder="Masukan jumlah individu">
                                             </div>
                                             <div class="form-group">
                                                 <label>Maksimal Generasi</label>
-                                                <input type="text" class="form-control" name="max_generasi"
+                                                <input type="number" class="form-control" name="max_generasi"
                                                     placeholder="Masukan maksimal generasi">
                                             </div>
                                         </div>
@@ -75,12 +75,12 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Crossover Rate</label>
-                                                    <input type="text" class="form-control" name="crossover_rate"
+                                                    <input type="number" class="form-control" name="crossover_rate"
                                                         placeholder="Masukan crossover rate">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Mutation Rate</label>
-                                                    <input type="text" class="form-control" name="mutation_rate"
+                                                    <input type="number" class="form-control" name="mutation_rate"
                                                         placeholder="Masukan Mutation Rate">
                                                 </div>
                                             </div>
@@ -88,9 +88,9 @@
                                         </div>
                                     </div>
                                     <h3 class="page-title mt-3">Tampilan Proses</h3>
-                                    @if(isset($flattenpenugasan))
+                                    @if (@isset($result))
                                     @foreach ($result as $data)
-                                    <h3 class="page-title mt-3">Generasi {{$data['iterasi']}}</h3>
+                                    <h3 class="page-title mt-5">Generasi {{$data['iterasi']}}</h3>
                                     <div class="table-responsive">
                                         <table
                                             class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
@@ -274,8 +274,8 @@
                                         </table>
                                     </div>
                                     @endforeach
-                                    
                                     @endif
+                                    
 
                                 </div>
                                 <div class="tab-pane" id="bottom-tab2">
