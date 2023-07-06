@@ -421,6 +421,118 @@ class PenjadwalanController extends Controller
             //* end crossover
 
             //* mutasi
+
+            // membuat urutan baru $penugasan berdasarkan $individu_crossover_new
+            // $arrayList = array();
+            // $penugasan = array();
+            // for ($i = 0; $i < $jum_idv; $i++) {
+            //     // generate individu
+            //     $arrayList[$i] = $individu_crossover_new[$i]; //216
+            // }
+
+            // for ($i = 0; $i < $jum_idv; $i++) {
+            //     // generate individu
+            //     $arraySample[$i] = Penugasan::all()->toArray(); //216
+            // }
+
+            // for ($i = 0; $i < count($arraySample); $i++) {
+            //     $array_id = $arrayList[$i];
+            //     $array_urutan = array();
+
+            //     foreach ($array_id as $id) {
+            //         foreach ($arraySample[$i] as $obj) {
+            //             if ($obj["id"] == $id) {
+            //                 $array_urutan[] = $obj;
+            //                 break;
+            //             }
+            //         }
+            //     }
+
+            //     $penugasan[$i] = $array_urutan;
+            // }
+
+            // // dd(collect($penugasan[0])->pluck('id_guru')->all());
+            // for ($i = 0; $i < $jum_idv; $i++) {
+            //     for ($j = 0; $j < count($jum_kelas); $j++) {
+            //         $data_kelas[$j] = collect($penugasan[$i])->where('id_ruangan', $j + 1)->values()->all();
+            //         // $data_guru[$j] = collect($data_kelas[$j])->pluck('id_guru')->all();
+            //         $data_guru[$j] = collect($data_kelas[$j])->where('id_ruangan', $j + 1)->pluck('id_guru')->all();
+            //     }
+            //     $fitness_guru[$i] = $data_kelas;
+            //     // $fitness_guru[$i] = $data_guru;
+            // }
+
+            // // dd($fitness_guru);
+
+            // // dd($fitness_guru);
+            // // return $fitness_guru;
+
+            // // dd(count($data_guru[0]));
+            // $total_clash_guru = 0;
+            // $get_clash_guru = array();
+            // $get_col_kelas = array();
+            // $get_filtered_guru = array();
+            // for ($k = 0; $k < $jum_idv; $k++) {
+            //     for ($l = 0; $l < (count($data_guru[0])); $l++) {
+            //         for ($m = 0; $m < (count($jum_kelas)); $m++) {
+            //             $col_guru[$m] = collect($array_guru);
+            //             $col_guru[$m]->push($fitness_guru[$k][$m][$l]);
+            //         }
+            //         // dd($col_guru);
+
+            //         //? kalau ngambil data $data_guru
+            //         // $col_kelas[$l] = collect($col_guru)->flatten()->toArray();
+
+            //         //? kalau ngambil data $data_kelas
+            //         $col_kelas[$l] = collect($col_guru)->pluck('id_guru')->toArray();
+            //         // dd($col_kelas[1]);
+            //         // dd($col_kelas[0]);
+            //         // dd($fitness_guru[0], $col_kelas[$l]);
+            //         $counted_guru[$l] = collect($col_kelas[$l])->countBy();
+
+            //         // dd($counted_guru[$l])
+            //         // // dd($col_kelas[$l], $counted_guru[$l]);
+            //         $filtered_guru[$l] = $counted_guru[$l]->filter(function ($value) {
+            //             return $value > 1;
+            //         })->keys();
+
+            //         $total_clash_guru += count(collect($filtered_guru[$l])->flatten());
+
+            //         // dd(collect($counted_guru)->toArray());
+            //     }
+            //     // dd($ab, count($filtered_guru));
+            //     $get_filtered_guru[$k] = collect($filtered_guru)->toArray();
+            //     $get_col_kelas[$k] = $col_kelas;
+            //     // dd($get_col_kelas[$k]);
+            //     $collect_clash_guru[$k] = $total_clash_guru;
+            //     $total_clash_guru = 0;
+            //     // dd($collect_clash_guru[$k]);
+            // }
+
+            // // dd(collect($col_kelas)->toArray());
+            // // dd($data_guru[0]);
+            // // dd($fitness_guru, $get_col_kelas, $get_filtered_guru, $collect_clash_guru, floor($collect_clash_guru[0] * 0.25));
+
+            // // dd($get_col_kelas[0][24]);
+            // for ($i = 0; $i < $jum_idv; $i++) {
+            //     for ($j = 0; $j < count($data_guru[0]) - 1; $j++) {
+            //         $parent_duplicate[$i][$j] = $get_col_kelas[$i][$j];
+            //         $index_duplicate[$i][$j] = $get_filtered_guru[$i][$j];
+            //         $get_indexes = array();
+
+            //         foreach ($parent_duplicate[$i][$j] as $index => $value) {
+            //             if (in_array($value, $index_duplicate[$i][$j])) {
+            //                 $get_indexes[] = $index;
+            //             }
+            //         }
+            //         // dd($parent_duplicate[$i][$j], $index_duplicate[$i][$j], $get_indexes);
+            //         $get[$i][$j] = $get_indexes;
+            //     }
+            //     $value_duplicate[$i] = $get;
+            // }
+
+            // dd($get_col_kelas, $get_filtered_guru, $value_duplicate);
+
             $mutatedArray = $individu_crossover_new;
             // $length = count($individu_crossover_new[0]);
             $mutation_rate = $request->mutation_rate;
@@ -435,8 +547,8 @@ class PenjadwalanController extends Controller
             }
 
             for ($i = 0; $i < count($individu_crossover_new); $i++) {
-
-                if ((mt_rand() * mt_getrandmax()) < $mutation_rate) {
+                $random_mr[$i] = mt_rand() / mt_getrandmax();
+                if ($random_mr[$i] < $mutation_rate) {
                     $index1[$i] = array_rand($individu_crossover_new[$i]);
                     $index2[$i] = array_rand($individu_crossover_new[$i]);
 
@@ -476,15 +588,49 @@ class PenjadwalanController extends Controller
                 'individu_mutasi' => $individu_mutasi,
                 'index1' => $index1,
                 'index2' => $index2,
+                'total_clash_guru' => $collect_clash_guru,
 
             ];
             $loop++;
         } while ($loop <= $max_gen);
 
+        //* get hasil genetika algoritma
+        // mencari index dengan fitness value tertinggi
+        $fitness_high = $result[$max_gen]['fitness_value'];
+        $maxValue = max($fitness_high); // Mencari nilai tertinggi dalam array
+        $maxIndex = array_search($maxValue, $fitness_high); // Mencari indeks dari nilai tertinggi
 
-        // dd($result);
-        // return $result;
+        // dd($fitness_high, $maxValue, $maxIndex);
 
-        return view('penjadwalan.index', compact('result'));
+        $arraySample = Penugasan::all()->toArray(); //216
+        $array_id = $result[$max_gen]['individu_mutasi'][$maxIndex];
+        $array_ga = array();
+        // dd($array_id, $arraySample);
+
+        foreach ($array_id as $id) {
+            foreach ($arraySample as $obj) {
+                if ($obj["id"] == $id) {
+                    $array_ga[] = $obj;
+                    break;
+                }
+            }
+        }
+
+        for ($j = 0; $j < count($jum_kelas); $j++) {
+            // filter individu berdasarkan kelas
+            $ga_kelas[$j] = collect($array_ga)->where('id_ruangan', $j + 1)->values()->all(); //24
+            $ganda_mapel[$j] = collect($ga_kelas[$j])->flatMap(function ($item) {
+                return [$item, $item];
+            })->all();
+        }
+
+        // dd($ganda_mapel[0][0]['id']);
+        // dd($ganda_mapel);
+
+
+
+        // dd($array_urutan);
+
+        return view('penjadwalan.index', compact('result', 'maxValue', 'ganda_mapel', 'jum_kelas'));
     }
 }
