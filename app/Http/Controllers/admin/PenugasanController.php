@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Penugasan;
 use App\Models\DataGuru;
 use App\Models\MataPelajaran;
@@ -19,7 +20,7 @@ class PenugasanController extends Controller
         $guru = DataGuru::all();
         $mapel = MataPelajaran::all();
         $ruangan = Ruangan::all();
-        return view('penugasan.index', compact('guru', 'mapel', 'ruangan', 'penugasan'));
+        return view('admin.penugasan.index', compact('guru', 'mapel', 'ruangan', 'penugasan'));
     }
 
     /**
@@ -30,7 +31,7 @@ class PenugasanController extends Controller
         $guru = DataGuru::all();
         $mapel = MataPelajaran::all();
         $ruangan = Ruangan::all();
-        return view('penugasan.create', compact('guru', 'mapel', 'ruangan'));
+        return view('admin.penugasan.create', compact('guru', 'mapel', 'ruangan'));
     }
 
     /**

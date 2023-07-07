@@ -66,7 +66,7 @@ class DataGuruSeeder extends Seeder
             'nama' => 'Rini, S.Pd',
             'email' => 'rini@gmail.com',
             'password' => '12345678',
-            'role' => 'guru',
+            'role' => 'administrator',
             'foto' => 'user.jpg',
         ]);
         DataGuru::create([
@@ -147,8 +147,43 @@ class DataGuruSeeder extends Seeder
             'foto' => 'user.jpg',
         ]);
         DataGuru::create([
-            'nama' => 'Ummi',
-            'email' => 'ummi@gmail.com',
+            'nama' => 'Quratul Ayun, S.Pd.I',
+            'email' => 'ayun@gmail.com',
+            'password' => '12345678',
+            'role' => 'guru',
+            'foto' => 'user.jpg',
+        ]);
+        DataGuru::create([
+            'nama' => 'M. Padjri, S.Pd',
+            'email' => 'padjri@gmail.com',
+            'password' => '12345678',
+            'role' => 'guru',
+            'foto' => 'user.jpg',
+        ]);
+        DataGuru::create([
+            'nama' => 'M. Noor Hairullah, S.Pd',
+            'email' => 'hairullah@gmail.com',
+            'password' => '12345678',
+            'role' => 'guru',
+            'foto' => 'user.jpg',
+        ]);
+        DataGuru::create([
+            'nama' => 'Noor Hanifah K',
+            'email' => 'hanifah@gmail.com',
+            'password' => '12345678',
+            'role' => 'guru',
+            'foto' => 'user.jpg',
+        ]);
+        DataGuru::create([
+            'nama' => 'M. Adi Rifani, S.Pd',
+            'email' => 'adi@gmail.com',
+            'password' => '12345678',
+            'role' => 'guru',
+            'foto' => 'user.jpg',
+        ]);
+        DataGuru::create([
+            'nama' => 'Muhammad Iqbal',
+            'email' => 'iqbal@gmail.com',
             'password' => '12345678',
             'role' => 'guru',
             'foto' => 'user.jpg',

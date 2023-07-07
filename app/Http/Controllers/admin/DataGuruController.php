@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\DataGuru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ class DataGuruController extends Controller
     public function index()
     {
         $guru = DataGuru::all();
-        return view('data-guru.index', compact('guru'));
+        return view('admin.data-guru.index', compact('guru'));
     }
 
     /**
@@ -22,7 +23,7 @@ class DataGuruController extends Controller
      */
     public function create()
     {
-        return view('data-guru.create');
+        return view('admin.data-guru.create');
     }
 
     /**
@@ -71,7 +72,7 @@ class DataGuruController extends Controller
     public function edit(DataGuru $guru)
     {
         $guru = DataGuru::find($guru->id);
-        return view('data-guru.edit', compact('guru'));
+        return view('admin.data-guru.edit', compact('guru'));
     }
 
     /**

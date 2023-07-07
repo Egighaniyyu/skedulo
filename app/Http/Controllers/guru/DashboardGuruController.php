@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\guru;
 
-use App\Models\Dashboard;
+use App\Http\Controllers\Controller;
+use App\Models\DashboardGuru;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class DashboardGuruController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.index');
+        return view('dashboard-guru.index');
     }
 
     /**
@@ -34,7 +35,7 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dashboard $dashboard)
+    public function show(DashboardGuru $dashboardGuru)
     {
         //
     }
@@ -42,7 +43,7 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dashboard $dashboard)
+    public function edit(DashboardGuru $dashboardGuru)
     {
         //
     }
@@ -50,7 +51,7 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dashboard $dashboard)
+    public function update(Request $request, DashboardGuru $dashboardGuru)
     {
         //
     }
@@ -58,7 +59,7 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dashboard $dashboard)
+    public function destroy(DashboardGuru $dashboardGuru)
     {
         //
     }

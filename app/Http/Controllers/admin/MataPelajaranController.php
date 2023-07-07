@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\MataPelajaran;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class MataPelajaranController extends Controller
     public function index()
     {
         $mapel = MataPelajaran::all();
-        return view('mata-pelajaran.index', compact('mapel'));
+        return view('admin.mata-pelajaran.index', compact('mapel'));
     }
 
     /**
@@ -21,7 +22,7 @@ class MataPelajaranController extends Controller
      */
     public function create()
     {
-        return view('mata-pelajaran.create');
+        return view('admin.mata-pelajaran.create');
     }
 
     /**
@@ -50,7 +51,7 @@ class MataPelajaranController extends Controller
     public function edit(MataPelajaran $mapel)
     {
         $mapel = MataPelajaran::find($mapel->id);
-        return view('mata-pelajaran.edit', compact('mapel'));
+        return view('admin.mata-pelajaran.edit', compact('mapel'));
     }
 
     /**

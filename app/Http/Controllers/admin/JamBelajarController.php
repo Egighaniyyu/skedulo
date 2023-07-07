@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\JamBelajar;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class JamBelajarController extends Controller
     public function index()
     {
         $jambelajar = JamBelajar::all();
-        return view('jam-belajar.index', compact('jambelajar'));
+        return view('admin.jam-belajar.index', compact('jambelajar'));
     }
 
     /**
@@ -21,7 +22,7 @@ class JamBelajarController extends Controller
      */
     public function create()
     {
-        return view('jam-belajar.create');
+        return view('admin.jam-belajar.create');
     }
 
     /**
@@ -51,7 +52,7 @@ class JamBelajarController extends Controller
     {
         $jamBelajar = JamBelajar::find($jamBelajar->id);
         // dd($jamBelajar);
-        return view('jam-belajar.edit', compact('jamBelajar'));
+        return view('admin.jam-belajar.edit', compact('jamBelajar'));
     }
 
     /**

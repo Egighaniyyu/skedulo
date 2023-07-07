@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class RuanganController extends Controller
     public function index()
     {
         $ruangan = Ruangan::all();
-        return view('ruangan.index', compact('ruangan'));
+        return view('admin.ruangan.index', compact('ruangan'));
     }
 
     /**
@@ -21,7 +22,7 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        return view('ruangan.create');
+        return view('admin.ruangan.create');
     }
 
     /**
@@ -50,7 +51,7 @@ class RuanganController extends Controller
     public function edit(Ruangan $ruangan)
     {
         $ruangan = Ruangan::find($ruangan->id);
-        return view('ruangan.edit', compact('ruangan'));
+        return view('admin.ruangan.edit', compact('ruangan'));
     }
 
     /**

@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
-use App\Models\GuruList;
-use App\Models\DataGuru;
+use App\Http\Controllers\Controller;
+use App\Models\GuruGrid;
 use Illuminate\Http\Request;
 
-class GuruListController extends Controller
+class GuruGridController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $guru = DataGuru::all();
-        return view('data-guru.guru-list', compact('guru'));
+        return view('admin.data-guru.guru-grid');
     }
 
     /**
@@ -36,7 +35,7 @@ class GuruListController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(GuruList $guruList)
+    public function show(GuruGrid $guruGrid)
     {
         //
     }
@@ -44,7 +43,7 @@ class GuruListController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(GuruList $guruList)
+    public function edit(GuruGrid $guruGrid)
     {
         //
     }
@@ -52,7 +51,7 @@ class GuruListController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, GuruList $guruList)
+    public function update(Request $request, GuruGrid $guruGrid)
     {
         //
     }
@@ -60,7 +59,7 @@ class GuruListController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(GuruList $guruList)
+    public function destroy(GuruGrid $guruGrid)
     {
         //
     }

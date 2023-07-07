@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Penjadwalan;
 use App\Models\Penugasan;
 use App\Models\JamBelajar;
@@ -19,7 +20,7 @@ class PenjadwalanController extends Controller
      */
     public function index()
     {
-        return view('penjadwalan.index');
+        return view('admin.penjadwalan.index');
     }
 
     /**
@@ -629,8 +630,9 @@ class PenjadwalanController extends Controller
 
 
 
+
         // dd($array_urutan);
 
-        return view('penjadwalan.index', compact('result', 'maxValue', 'ganda_mapel', 'jum_kelas'));
+        return view('admin.penjadwalan.index', compact('result', 'maxValue', 'ganda_mapel', 'jum_kelas'));
     }
 }
