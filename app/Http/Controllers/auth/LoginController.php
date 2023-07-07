@@ -1,66 +1,68 @@
 <?php
 
-namespace App\Http\Controllers\auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Login;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return view('auth.login');
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
+
+    use AuthenticatesUsers;
 
     /**
-     * Show the form for creating a new resource.
+     * Where to redirect users after login.
+     *
+     * @var string
      */
-    public function create()
-    {
-        //
-    }
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    public function store(Request $request)
+    public function __construct()
     {
-        //
+        $this->middleware('guest')->except('logout');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Login $login)
+    public function login(Request $request)
     {
-        //
-    }
+        $input = $request->all();
+        $this->validate($request,[
+            'login'=>'required',
+            'password'=>'required'
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Login $login)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Login $login)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Login $login)
-    {
-        //
+        // login with email or username
+        $login = request()->input('login');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nama';
+        request()->merge([$field => $login]);
+        if (auth()->attempt(array($field => $input['login'], 'password' => $input['password'])))
+        {
+            if( auth()->user()->role == 'admin' ){
+                return redirect()->route('dashboards.index');
+            }
+            elseif( auth()->user()->role == 'guru' ){
+                return redirect()->route('dashboard.index');
+            }
+        }
+        else{
+            return redirect()->route('login');
+        }
     }
 }

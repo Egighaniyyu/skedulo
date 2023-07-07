@@ -13,7 +13,7 @@ class DashboardGuruController extends Controller
      */
     public function index()
     {
-        return view('dashboard-guru.index');
+        return view('guru.dashboard-guru.index');
     }
 
     /**

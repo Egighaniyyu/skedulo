@@ -67,8 +67,8 @@
                             <img class="rounded-circle" src="{{ asset('assets/img/profiles/avatar-01.jpg') }}"
                                 width="31" alt="Soeng Souy">
                             <div class="user-text">
-                                <h6>Soeng Souy</h6>
-                                <p class="text-muted mb-0">Administrator</p>
+                                <h6>{{ Auth::user()->nama }}</h6>
+                                <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
                             </div>
                         </span>
                     </a>
@@ -79,13 +79,16 @@
                                     class="avatar-img rounded-circle">
                             </div>
                             <div class="user-text">
-                                <h6>Soeng Souy</h6>
-                                <p class="text-muted mb-0">Administrator</p>
+                                <h6>{{ Auth::user()->nama }}</h6>
+                                <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
                             </div>
                         </div>
                         <a class="dropdown-item" href="profile.html">My Profile</a>
                         <a class="dropdown-item" href="inbox.html">Inbox</a>
-                        <a class="dropdown-item" href="login.html">Logout</a>
+                        <form class="d-flex" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="dropdown-item" type="submit">Logout</button>
+                        </form>
                     </div>
                 </li>
 

@@ -37,15 +37,19 @@
                             {{-- <p class="account-subtitle">Need an account? <a href="register.html">Sign Up</a></p> --}}
                             <h2>Sign in</h2>
 
-                            <form action="index.html">
+                            <form action="{{ route('login') }}" method="POST">
+                                @csrf
                                 <div class="form-group">
-                                    <label>Email <span class="login-danger">*</span></label>
-                                    <input class="form-control" type="email">
+                                    <label>Email or Nama <span class="login-danger">*</span></label>
+                                    <input class="form-control" name="login" type="text"
+                                        placeholder="Enter your Nama or email" required>
                                     <span class="profile-views"><i class="fas fa-user-circle"></i></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Password <span class="login-danger">*</span></label>
-                                    <input class="form-control pass-input" type="text">
+                                    <input class="form-control pass-input" type="password" name="password"
+                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                        required>
                                     <span class="profile-views feather-eye toggle-password"></span>
                                 </div>
                                 <div class="forgotpass">
@@ -61,7 +65,6 @@
                                     <button class="btn btn-primary btn-block" type="submit">Login</button>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>

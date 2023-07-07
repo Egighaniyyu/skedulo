@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class DataGuru extends Model
+class DataGuru extends Authenticatable
 {
-    use HasFactory;
+    use Notifiable, HasFactory;
     protected $guarded = [];
-    protected $primaryKey = 'id';
-    protected $table = 'data_gurus';
 }

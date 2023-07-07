@@ -1,18 +1,23 @@
 <?php
 
-use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\guru\DashboardGuruController;
-use App\Http\Controllers\admin\DataGuruController;
-use App\Http\Controllers\admin\GuruListController;
-use App\Http\Controllers\admin\GuruGridController;
-use App\Http\Controllers\admin\MataPelajaranController;
-use App\Http\Controllers\admin\RuanganController;
-use App\Http\Controllers\admin\JamBelajarController;
-use App\Http\Controllers\admin\PenugasanController;
-use App\Http\Controllers\admin\PenjadwalanController;
-use App\Http\Controllers\admin\WaktuBelajarController;
-use App\Http\Controllers\auth\LoginController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\guru\{
+    DashboardGuruController as GuruDashboardGuruController,
+};
+
+use App\Http\Controllers\admin\{
+    DashboardController as AdminDashboardController,
+    DataGuruController as AdminDataGuruController,
+    GuruListController as AdminGuruListController,
+    GuruGridController as AdminGuruGridController,
+    MataPelajaranController as AdminMataPelajaranController,
+    RuanganController as AdminRuanganController,
+    JamBelajarController as AdminJamBelajarController,
+    PenugasanController as AdminPenugasanController,
+    PenjadwalanController as AdminPenjadwalanController,
+    WaktuBelajarController as AdminWaktuBelajarController,
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -25,24 +30,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('layouts/master');
-// });
+Auth::routes();
 
-Route::resource('/', DashboardController::class);
-Route::resource('/guru', DataGuruController::class);
-Route::resource('/guru-list', GuruListController::class);
-Route::resource('/guru-grid', GuruGridController::class);
-Route::resource('/mapel', MataPelajaranController::class);
-Route::resource('/ruangan', RuanganController::class);
-Route::resource('/jam-belajar', JamBelajarController::class);
-Route::resource('/penugasan', PenugasanController::class);
+Route::get('/', function () {
+    return view('auth.login');
+});
 
-Route::resource('/penjadwalan', PenjadwalanController::class);
-route::POST('/penjadwalan/getIndividu', [PenjadwalanController::class, 'randIndividu'])->name('penjadwalan.randIndividu');
-route::GET('/penjadwalan/fitness', [PenjadwalanController::class, 'evaluateFitness'])->name('penjadwalan.evaluateFitness');
-Route::resource('/waktu-belajar', WaktuBelajarController::class);
+Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
+    Route::resource('/dashboards', AdminDashboardController::class);
+    Route::resource('/guru', AdminDataGuruController::class);
+    Route::resource('/guru-list', AdminGuruListController::class);
+    Route::resource('/guru-grid', AdminGuruGridController::class);
+    Route::resource('/mapel', AdminMataPelajaranController::class);
+    Route::resource('/ruangan', AdminRuanganController::class);
+    Route::resource('/jam-belajar', AdminJamBelajarController::class);
+    Route::resource('/penugasan', AdminPenugasanController::class);
 
-Route::resource('/login', LoginController::class);
-// Route::get('/guru-list', 'DataGuruController@guruList')->name('guru.list');
-// Route::get('/guru/guru-list', [DataGuruController::class, 'guruList'])->name('guru.list');
+    Route::resource('/penjadwalan', AdminPenjadwalanController::class);
+    route::POST('/penjadwalan/getIndividu', [AdminPenjadwalanController::class, 'randIndividu'])->name('penjadwalan.randIndividu');
+    route::GET('/penjadwalan/fitness', [AdminPenjadwalanController::class, 'evaluateFitness'])->name('penjadwalan.evaluateFitness');
+    Route::resource('/waktu-belajar', AdminWaktuBelajarController::class);
+});
+
+Route::group(['prefix' => 'guru', 'middleware' => ['isGuru', 'auth']], function () {
+    Route::resource('/dashboard', GuruDashboardGuruController::class);
+});
