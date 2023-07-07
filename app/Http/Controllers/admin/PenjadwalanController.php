@@ -7,6 +7,7 @@ use App\Models\Penjadwalan;
 use App\Models\Penugasan;
 use App\Models\JamBelajar;
 use App\Models\Ruangan;
+use App\Models\WaktuBelajar;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -625,6 +626,9 @@ class PenjadwalanController extends Controller
             })->all();
         }
 
+        $waktu_belajar = WaktuBelajar::all()->pluck('jam')->toArray();
+        // dd($waktu_belajar);
+
         // dd($ganda_mapel[0][0]['id']);
         // dd($ganda_mapel);
 
@@ -633,6 +637,6 @@ class PenjadwalanController extends Controller
 
         // dd($array_urutan);
 
-        return view('admin.penjadwalan.index', compact('result', 'maxValue', 'ganda_mapel', 'jum_kelas'));
+        return view('admin.penjadwalan.index', compact('result', 'maxValue', 'ganda_mapel', 'jum_kelas', 'waktu_belajar'));
     }
 }

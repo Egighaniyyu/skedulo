@@ -304,7 +304,11 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <td></td>
+                                                        <td>
+                                                            @foreach ($waktu_belajar as $waktu_belajar)
+                                                                <div>{{ $waktu_belajar }}</div>
+                                                            @endforeach
+                                                        </td>
                                                         @for ($idRuangan = 1; $idRuangan <= 9; $idRuangan++)
                                                             <td>
                                                                 @foreach ($ganda_mapel as $kelas)

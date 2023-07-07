@@ -18,6 +18,7 @@ use App\Http\Controllers\admin\{
     PenjadwalanController as AdminPenjadwalanController,
     WaktuBelajarController as AdminWaktuBelajarController,
 };
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,13 +44,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
     Route::resource('/guru-grid', AdminGuruGridController::class);
     Route::resource('/mapel', AdminMataPelajaranController::class);
     Route::resource('/ruangan', AdminRuanganController::class);
-    Route::resource('/jam-belajar', AdminJamBelajarController::class);
+    Route::resource('/kegiatan/jam-belajar', AdminJamBelajarController::class);
     Route::resource('/penugasan', AdminPenugasanController::class);
 
     Route::resource('/penjadwalan', AdminPenjadwalanController::class);
     route::POST('/penjadwalan/getIndividu', [AdminPenjadwalanController::class, 'randIndividu'])->name('penjadwalan.randIndividu');
     route::GET('/penjadwalan/fitness', [AdminPenjadwalanController::class, 'evaluateFitness'])->name('penjadwalan.evaluateFitness');
-    Route::resource('/waktu-belajar', AdminWaktuBelajarController::class);
+    Route::resource('/kegiatan/waktu-belajar', AdminWaktuBelajarController::class);
 });
 
 Route::group(['prefix' => 'guru', 'middleware' => ['isGuru', 'auth']], function () {

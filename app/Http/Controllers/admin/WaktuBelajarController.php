@@ -36,7 +36,7 @@ class WaktuBelajarController extends Controller
     {
         WaktuBelajar::create([
             'id_hari' => $request->id_hari,
-            'waktu_belajar' => $request->waktu_belajar,
+            'jam' => $request->waktu_belajar,
         ]);
         return redirect()->route('waktu-belajar.index');
     }
@@ -66,7 +66,7 @@ class WaktuBelajarController extends Controller
     {
         $waktuBelajar->update([
             'id_hari' => $request->id_hari,
-            'waktu_belajar' => $request->waktu_belajar,
+            'jam' => $request->waktu_belajar,
         ]);
         return redirect()->route('waktu-belajar.index');
     }

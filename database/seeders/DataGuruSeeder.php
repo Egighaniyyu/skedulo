@@ -14,13 +14,6 @@ class DataGuruSeeder extends Seeder
     public function run(): void
     {
         DataGuru::create([
-            'nama' => 'admin',
-            'email' => 'pahriati@gmail.com',
-            'password' => bcrypt('12345'),
-            'role' => 'admin',
-            'foto' => 'user.jpg',
-        ]);
-        DataGuru::create([
             'nama' => 'Pahriati, S.Pd.I',
             'email' => 'pahriati@gmail.com',
             'password' => bcrypt('12345678'),
@@ -73,7 +66,7 @@ class DataGuruSeeder extends Seeder
             'nama' => 'Rini, S.Pd',
             'email' => 'rini@gmail.com',
             'password' => bcrypt('12345678'),
-            'role' => 'administrator',
+            'role' => 'admin',
             'foto' => 'user.jpg',
         ]);
         DataGuru::create([

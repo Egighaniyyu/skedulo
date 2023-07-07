@@ -53,30 +53,31 @@
                                                     <input class="form-check-input" type="checkbox" value="something">
                                                 </div>
                                             </th>
-                                            <th>ID</th>
+                                            <th>No.</th>
                                             <th>Hari</th>
                                             <th>Waktu Jam</th>
                                             <th class="text-end">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($jambelajar as $jambelajar)
+                                        @foreach ($waktuBelajar as $waktuBelajar)
                                             <tr>
                                                 <td>
                                                     <div class="form-check check-tables">
                                                         <input class="form-check-input" type="checkbox" value="something">
                                                     </div>
                                                 </td>
-                                                <td>{{ $jambelajar->id }}</td>
-                                                <td>{{ $jambelajar->hari }}</td>
-                                                <td>{{ $jambelajar->jumlah_jam }}</td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $waktuBelajar->hari->hari }}</td>
+                                                <td>{{ $waktuBelajar->jam }}</td>
                                                 <td class="text-end">
                                                     <div class="actions">
-                                                        <a href="{{ route('jam-belajar.edit', $jambelajar->id) }}"
+                                                        <a href="{{ route('waktu-belajar.edit', $waktuBelajar->id) }}"
                                                             class="btn btn-sm bg-success-light me-2">
                                                             <i class="feather-edit"></i>
                                                         </a>
-                                                        <form action="{{ route('jam-belajar.destroy', $jambelajar->id) }}"
+                                                        <form
+                                                            action="{{ route('waktu-belajar.destroy', $waktuBelajar->id) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('DELETE')
