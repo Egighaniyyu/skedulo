@@ -4,6 +4,7 @@ namespace App\Http\Controllers\guru;
 
 use App\Http\Controllers\Controller;
 use App\Models\DashboardGuru;
+use App\Models\Penjadwalan;
 use Illuminate\Http\Request;
 
 class DashboardGuruController extends Controller
@@ -13,7 +14,8 @@ class DashboardGuruController extends Controller
      */
     public function index()
     {
-        return view('guru.dashboard-guru.index');
+        $jadwal = Penjadwalan::where('id_guru', auth()->user()->id)->get();
+        return view('guru.dashboard-guru.index', compact('jadwal'));
     }
 
     /**

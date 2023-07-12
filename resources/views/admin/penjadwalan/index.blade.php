@@ -262,11 +262,27 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            {{-- @for ($i = 0; $i < count($data['individu_mutasi']); $i++)
+                                                                <tr>
+                                                                    <td>P{{ $data['random_index_mr'][$i] }}
+                                                                    </td>
+                                                                    <td>{{ $data['index1'][$i] }}</td>
+                                                                    <td>{{ $data['index2'][$i] }}</td>
+                                                                    <td>
+                                                                        @foreach ($data['individu_mutasi'] as $individu_mutasi)
+                                                                            @foreach ($individu_mutasi as $individu_mutasi)
+                                                                                {{ $individu_mutasi }}
+                                                                            @endforeach
+                                                                        @endforeach
+                                                                    </td>
+                                                                </tr>
+                                                            @endfor --}}
                                                             @foreach ($data['individu_mutasi'] as $individu_mutasi)
                                                                 <tr>
-                                                                    <td>P{{ $loop->iteration }}</td>
-                                                                    <td>{{ $data['index1'][$loop->iteration - 1] }}</td>
-                                                                    <td>{{ $data['index2'][$loop->iteration - 1] }}</td>
+                                                                    <td>P{{ $data['random_index_mr'][$loop->iteration - 1] + 1 }}
+                                                                    </td>
+                                                                    {{-- <td>{{ $data['index1'][$loop->iteration - 1] }}</td>
+                                                                    <td>{{ $data['index2'][$loop->iteration - 1] }}</td> --}}
                                                                     <td>
                                                                         @foreach ($individu_mutasi as $individu_mutasi)
                                                                             {{ $individu_mutasi }}
@@ -306,20 +322,22 @@
                                                     <tbody>
                                                         <td>
                                                             @foreach ($waktu_belajar as $waktu_belajar)
-                                                                <div>{{ $waktu_belajar }}</div>
+                                                                <div>
+                                                                    {{ $waktu_belajar->hari->hari }},
+                                                                    {{ $waktu_belajar->jam }}
+                                                                </div><br>
                                                             @endforeach
                                                         </td>
                                                         @for ($idRuangan = 1; $idRuangan <= 9; $idRuangan++)
                                                             <td>
-                                                                @foreach ($ganda_mapel as $kelas)
-                                                                    @foreach ($kelas as $ganda)
-                                                                        @if ($ganda['id_ruangan'] == $idRuangan)
-                                                                            <div>
-                                                                                id: {{ $ganda['id'] }}, ruang:
-                                                                                {{ $ganda['id_ruangan'] }}
-                                                                            </div>
-                                                                        @endif
-                                                                    @endforeach
+                                                                @foreach ($jadwal as $kelas)
+                                                                    @if ($kelas['id_ruangan'] == $idRuangan)
+                                                                        <div>
+                                                                            guru:
+                                                                            {{ $kelas->guru->nama }},<br>
+                                                                            mapel: {{ $kelas->mapel->mapel }},
+                                                                        </div>
+                                                                    @endif
                                                                 @endforeach
                                                             </td>
                                                         @endfor

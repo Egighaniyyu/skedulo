@@ -55,6 +55,7 @@ class DataGuruController extends Controller
             'foto' => $imageName,
         ]);
 
+        toastr()->success('Data berhasil ditambahkan!');
         return redirect()->route('guru-list.index');
     }
 
@@ -103,6 +104,7 @@ class DataGuruController extends Controller
             'foto' => $imageName,
         ]);
 
+        toastr()->success('Data berhasil diubah!');
         return redirect()->route('guru-list.index');
     }
 
@@ -113,6 +115,7 @@ class DataGuruController extends Controller
     {
         $guru = DataGuru::find($guru->id);
         $guru->delete();
+        toastr()->success('Data berhasil dihapus!');
         return redirect()->route('guru-list.index');
     }
 }

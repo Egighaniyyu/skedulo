@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class LoginController extends Controller
 {
@@ -29,11 +31,11 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-    protected function redirectTo(){
-        if( Auth()->user()->role == 'admin'){
+    protected function redirectTo()
+    {
+        if (Auth()->user()->role == 'admin') {
             return route('dashboards.index');
-        }
-        elseif( Auth()->user()->role == 'guru'){
+        } elseif (Auth()->user()->role == 'guru') {
             return route('dashboard.index');
         }
     }
@@ -51,25 +53,25 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $input = $request->all();
-        $this->validate($request,[
-            'login'=>'required',
-            'password'=>'required'
+        $this->validate($request, [
+            'login' => 'required',
+            'password' => 'required'
         ]);
 
         // login with email or username
         $login = request()->input('login');
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nama';
         request()->merge([$field => $login]);
-        if (auth()->attempt(array($field => $input['login'], 'password' => $input['password'])))
-        {
-            if( auth()->user()->role == 'admin' ){
+        if (auth()->attempt(array($field => $input['login'], 'password' => $input['password']))) {
+            if (auth()->user()->role == 'admin') {
+                toastr()->success('Selamat Datang ');
                 return redirect()->route('dashboards.index');
-            }
-            elseif( auth()->user()->role == 'guru' ){
+            } elseif (auth()->user()->role == 'guru') {
+                toastr()->success('Selamat Datang ');
                 return redirect()->route('dashboard.index');
             }
-        }
-        else{
+        } else {
+            toastr()->error('Username atau Password Salah');
             return redirect()->route('login');
         }
     }

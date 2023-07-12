@@ -34,6 +34,8 @@ class JamBelajarController extends Controller
             'hari' => $request->hari,
             'jumlah_jam' => $request->jumlah_jam,
         ]);
+
+        toastr()->success('Data berhasil ditambahkan!');
         return redirect()->route('jam-belajar.index');
     }
 
@@ -64,6 +66,8 @@ class JamBelajarController extends Controller
             'hari' => $request->hari,
             'jumlah_jam' => $request->jumlah_jam,
         ]);
+
+        toastr()->success('Data berhasil diubah!');
         return redirect()->route('jam-belajar.index');
     }
 
@@ -74,6 +78,8 @@ class JamBelajarController extends Controller
     {
         $jamBelajar = JamBelajar::find($jamBelajar->id);
         $jamBelajar->delete();
+
+        toastr()->success('Data berhasil dihapus!');
         return redirect()->route('jam-belajar.index');
     }
 }

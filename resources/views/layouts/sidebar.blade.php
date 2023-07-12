@@ -44,6 +44,10 @@
                     <li class="menu-title">
                         <span>Main Menu</span>
                     </li>
+                    <li class="@if (request()->routeIs('dashboard.index')) active @endif">
+                        <a href="{{ route('dashboard.index') }}"><i class="feather-grid"></i> <span>
+                                Dashboard</span></a>
+                    </li>
                 </ul>
             @endif
         </div>

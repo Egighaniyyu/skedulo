@@ -34,6 +34,7 @@ class RuanganController extends Controller
             'ruangan' => $request->ruangan,
         ]);
 
+        toastr()->success('Data berhasil ditambahkan!');
         return redirect()->route('ruangan.index');
     }
 
@@ -63,6 +64,7 @@ class RuanganController extends Controller
             'ruangan' => $request->ruangan,
         ]);
 
+        toastr()->success('Data berhasil diubah!');
         return redirect()->route('ruangan.index');
     }
 
@@ -73,6 +75,8 @@ class RuanganController extends Controller
     {
         $ruangan = Ruangan::find($ruangan->id);
         $ruangan->delete();
+
+        toastr()->success('Data berhasil dihapus!');
         return redirect()->route('ruangan.index');
     }
 }

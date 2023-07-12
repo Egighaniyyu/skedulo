@@ -66,7 +66,7 @@ class PenugasanController extends Controller
         $guru = DataGuru::all();
         $mapel = MataPelajaran::all();
         $ruangan = Ruangan::all();
-        return view('penugasan.edit', compact('penugasan', 'guru', 'mapel', 'ruangan'));
+        return view('admin.penugasan.edit', compact('penugasan', 'guru', 'mapel', 'ruangan'));
     }
 
     /**

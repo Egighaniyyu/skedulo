@@ -34,6 +34,7 @@ class MataPelajaranController extends Controller
             'mapel' => $request->mapel,
         ]);
 
+        toastr()->success('Data berhasil ditambahkan!');
         return redirect()->route('mapel.index');
     }
 
@@ -63,6 +64,7 @@ class MataPelajaranController extends Controller
             'mapel' => $request->mapel,
         ]);
 
+        toastr()->success('Data berhasil diubah!');
         return redirect()->route('mapel.index');
     }
 
@@ -73,6 +75,7 @@ class MataPelajaranController extends Controller
     {
         $mapel = MataPelajaran::find($mapel->id);
         $mapel->delete();
+        toastr()->success('Data berhasil dihapus!');
         return redirect()->route('mapel.index');
     }
 }

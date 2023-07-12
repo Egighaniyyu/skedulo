@@ -68,6 +68,8 @@ class WaktuBelajarController extends Controller
             'id_hari' => $request->id_hari,
             'jam' => $request->waktu_belajar,
         ]);
+
+        toastr()->success('Data berhasil diubah!');
         return redirect()->route('waktu-belajar.index');
     }
 
@@ -78,6 +80,8 @@ class WaktuBelajarController extends Controller
     {
         $waktuBelajar = WaktuBelajar::find($waktuBelajar->id);
         $waktuBelajar->delete();
+
+        toastr()->success('Data berhasil dihapus!');
         return redirect()->route('waktu-belajar.index');
     }
 }
