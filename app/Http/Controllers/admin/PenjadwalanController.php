@@ -343,6 +343,7 @@ class PenjadwalanController extends Controller
             // mendapatkan index array yang bernilai 1
             $indexes = array();
             $indexes = array_keys($interval_cr, 1);
+            // dd($indexes);
 
             // tampilkan individu crossover yang dengan interval_cr = 1
             $individu_crossover_parent = array();
@@ -355,7 +356,7 @@ class PenjadwalanController extends Controller
 
             // membuat key baru untuk array individu_crossover_parent
             $parent = array_values($individu_crossover_parent);
-
+            // dd($indexes,$parent);
             // menentukan titik potong crossover secara random
             $titik_potong = array();
             $numParents = count($parent);
@@ -407,9 +408,6 @@ class PenjadwalanController extends Controller
                             while (in_array($newValue, $array)) {
                                 $newValue++;
                                 if ($newValue > count($array) + count($repeatedValues)) {
-                                    // Jika semua nilai 1-15 sudah ada dalam array
-                                    // Anda dapat menambahkan penanganan khusus di sini
-                                    // Misalnya, keluar dari perulangan atau menampilkan pesan error
                                     break;
                                 }
                             }
@@ -431,17 +429,30 @@ class PenjadwalanController extends Controller
                 $titik_potong[0] = 0;
             }
 
+            // dd($interval_cr);
 
-            // menggabungkan individu crossover dengan individu yang tidak dijadikan parent crossover
-            $arrayKeys = array_keys($individu_crossover);
+
+            // menggabungkan individu terpilih crossover dengan individu yang tidak dijadikan parent crossover
             $individu_crossover_new = array();
-            for ($i = 0; $i < count($arrayKeys); $i++) {
-                $key = $arrayKeys[$i];
-                if (array_key_exists($key, $children)) {
-                    $individu_crossover[$key] = $children[$key];
+            $a=0;
+            for ($i = 0; $i < $jum_idv; $i++) {
+                if ($interval_cr[$i] == 1) {
+                    $individu_crossover_new[$i] = $children[$a];
+                    $a++;
+                } else {
+                    $individu_crossover_new[$i] = $individu_seleksi[$i];
                 }
-                $individu_crossover_new[$i] = $individu_crossover[$key];
             }
+            // $arrayKeys = array_keys($individu_crossover);
+            // // dd($arrayKeys);
+            // $individu_crossover_new = array();
+            // for ($i = 0; $i < count($arrayKeys); $i++) {
+            //     $key = $arrayKeys[$i];
+            //     if (array_key_exists($key, $children)) {
+            //         $individu_crossover[$key] = $children[$key];
+            //     }
+            //     $individu_crossover_new[$i] = $individu_crossover[$key];
+            // }
             //* end crossover
 
             //* mutasi
