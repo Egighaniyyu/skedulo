@@ -4,6 +4,13 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dashboard;
+use App\Models\DataGuru;
+use App\Models\Penjadwalan;
+use App\Models\Penugasan;
+use App\Models\JamBelajar;
+use App\Models\MataPelajaran;
+use App\Models\Ruangan;
+use App\Models\WaktuBelajar;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,7 +20,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard.index');
+        $data_guru = DataGuru::count();
+        $data_kelas = Ruangan::count();
+        $data_mapel = MataPelajaran::count();
+        $data_hari = JamBelajar::count();
+        return view('admin.dashboard.index', compact('data_guru', 'data_kelas', 'data_mapel', 'data_hari'));
     }
 
     /**

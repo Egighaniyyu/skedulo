@@ -38,6 +38,10 @@
                         <a href="{{ route('penjadwalan.index') }}"><i class="fas fa-table"></i> <span>
                                 Penjadwalan</span></a>
                     </li>
+                    <li class="@if (request()->routeIs('hasil-jadwal.index')) active @endif">
+                        <a href="{{ route('hasil-jadwal.index') }}"><i class="fas fa-book"></i> <span>
+                                Hasil Penjadwalan</span></a>
+                    </li>
                 </ul>
             @else
                 <ul>

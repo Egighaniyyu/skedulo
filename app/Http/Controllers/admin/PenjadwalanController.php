@@ -13,6 +13,8 @@ use App\Models\WaktuBelajar;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Excel;
+use App\Exports\PenjadwalanExport;
 
 use function PHPSTORM_META\type;
 
@@ -534,8 +536,9 @@ class PenjadwalanController extends Controller
                 $total_clash_guru = 0;
                 // dd($collect_clash_guru[$k]);
             }
+            // dd($collect_clash_guru[0]);
             // sum value collect_clash_guru
-            // dd(array_sum($collect_clash_guru));
+            // dd($collect_clash_guru);
 
             // get index yang duplicate
             // for ($i = 0; $i < $jum_idv; $i++) {
@@ -556,8 +559,9 @@ class PenjadwalanController extends Controller
             // }
 
             // dd($get_col_kelas, $get_filtered_guru, $value_duplicate);
-
+            $mutatedArray=array();
             $mutatedArray = $individu_crossover_new;
+            // dd($mutatedArray[0][1]);
             $mutation_rate = $request->mutation_rate;
 
             $index1 = array();
@@ -571,16 +575,18 @@ class PenjadwalanController extends Controller
 
             $loop_mutation = intval(array_sum($collect_clash_guru) * $mutation_rate);
             $parent_cr = $individu_crossover_new;
+            $individu_mutasi = array();
+            $random_index_mr = array();
 
             for ($i = 0; $i < $loop_mutation; $i++) {
-                $random_index_mr[$i] = rand(0, count($parent_cr) - 1);
-                $index1[$i] = array_rand($parent_cr[$random_index_mr[$i]]);
-                $index2[$i] = array_rand($parent_cr[$random_index_mr[$i]]);
-                // dd($parent_cr[$random_index_mr[$i]]);
+                $random_index_mr[$i] = rand(0, count($mutatedArray) - 1);
+                $index1[$i] = array_rand($mutatedArray[$random_index_mr[$i]]);
+                $index2[$i] = array_rand($mutatedArray[$random_index_mr[$i]]);
+                // dd($mutatedArray[$random_index_mr[$i]]);
 
                 // Pastikan kedua indeks yang dipilih berbeda
                 while ($index2[$i] == $index1[$i]) {
-                    $index2[$i] = array_rand($parent_cr[$random_index_mr[$i]]);
+                    $index2[$i] = array_rand($mutatedArray[$random_index_mr[$i]]);
                 }
 
                 // Menukar nilai antara kedua indeks
@@ -590,6 +596,7 @@ class PenjadwalanController extends Controller
                 $individu_mutasi[$i] = collect($mutatedArray[$random_index_mr[$i]])->flatten()->toArray();
                 $parent_cr[$random_index_mr[$i]] = $mutatedArray[$random_index_mr[$i]];
             }
+
             // dd($index1, $index2, count($individu_mutasi));
             // dd($individu_mutasi);
             //* end mutasi
@@ -613,6 +620,7 @@ class PenjadwalanController extends Controller
                 'individu_mutasi' => $individu_mutasi,
                 'parent_cr' => $parent_cr,
                 'random_index_mr' => $random_index_mr,
+                'loop_mutation' => $loop_mutation,
                 'index1' => $index1,
                 'index2' => $index2,
                 'total_clash_guru' => $collect_clash_guru,
@@ -621,6 +629,8 @@ class PenjadwalanController extends Controller
             $loop++;
         } while ($loop <= $max_gen);
         // dd($result[$max_gen]['random_index_mr']);
+        // dd($result[2]['random_index_mr'],$result[2]['individu_mutasi']);
+        // return $result;
         // dd($result);
 
         //* get hasil genetika algoritma

@@ -40,9 +40,6 @@
                                         {{-- <a href="{{ route('guru-grid.index') }}}"
                                             class="btn btn-outline-gray me-2 @if (request()->routeIs('guru-grid.index')) active @endif"><i
                                         class="feather-grid"></i></a> --}}
-                                        <a href="#" class="btn btn-outline-primary me-2"><i
-                                                class="fas fa-download"></i>
-                                            Download</a>
                                         <a href="{{ route('guru.create') }}" class="btn btn-primary"><i
                                                 class="fas fa-plus"></i></a>
                                     </div>

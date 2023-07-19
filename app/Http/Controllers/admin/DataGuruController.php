@@ -46,17 +46,31 @@ class DataGuruController extends Controller
             $imageName = 'user.jpg';
         }
 
-
-        DataGuru::create([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => $request->password,
-            'role' => $request->role,
-            'foto' => $imageName,
-        ]);
-
-        toastr()->success('Data berhasil ditambahkan!');
-        return redirect()->route('guru-list.index');
+        // add toastr notification if field nama null
+        if ($request->nama == null) {
+            toastr()->error('Nama tidak boleh kosong!');
+            return redirect()->route('guru-list.create');
+        } elseif ($request->email == null) {
+            toastr()->error('Email tidak boleh kosong!');
+            return redirect()->route('guru-list.create');
+        } elseif ($request->password == null) {
+            toastr()->error('Password tidak boleh kosong!');
+            return redirect()->route('guru-list.create');
+        } elseif ($request->role == null) {
+            toastr()->error('Role tidak boleh kosong!');
+            return redirect()->route('guru-list.create');
+        } else{
+            DataGuru::create([
+                'nama' => $request->nama,
+                'email' => $request->email,
+                'password' => $request->password,
+                'role' => $request->role,
+                'foto' => $imageName,
+            ]);
+    
+            toastr()->success('Data berhasil ditambahkan!');
+            return redirect()->route('guru-list.index');
+        }
     }
 
     /**

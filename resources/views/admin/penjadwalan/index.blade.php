@@ -36,7 +36,7 @@
                                             <h3 class="page-title">Informasi Penjadwalan</h3>
                                         </div>
                                         <div class="col-auto text-end float-end ms-auto download-grp">
-                                            <a href="#" class="btn btn-outline-primary me-2"><i
+                                            <a href="{{ route('export') }}" class="btn btn-outline-primary me-2"><i
                                                     class="fas fa-download"></i>
                                                 Download</a>
                                         </div>
@@ -56,11 +56,13 @@
                                                     <label>Jumlah Individu</label>
                                                     <input type="number" class="form-control" name="jum_individu"
                                                         placeholder="Masukan jumlah individu">
+                                                    <span class="form-text text-muted">Contoh : 1 s/d 10</span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Maksimal Generasi</label>
                                                     <input type="number" class="form-control" name="max_generasi"
                                                         placeholder="Masukan maksimal generasi">
+                                                    <span class="form-text text-muted">Contoh : 1 s/d 50</span>
                                                 </div>
                                             </div>
                                             <p>
@@ -78,11 +80,13 @@
                                                         <label>Crossover Rate</label>
                                                         <input type="number" class="form-control" name="crossover_rate"
                                                             placeholder="Masukan crossover rate">
+                                                        <span class="form-text text-muted">Contoh : 10 s/d 100</span>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Mutation Rate</label>
                                                         <input type="number" class="form-control" name="mutation_rate"
                                                             placeholder="Masukan Mutation Rate">
+                                                        <span class="form-text text-muted">Contoh : 10 s/d 100</span>
                                                     </div>
                                                 </div>
 
@@ -262,27 +266,12 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {{-- @for ($i = 0; $i < count($data['individu_mutasi']); $i++)
-                                                                <tr>
-                                                                    <td>P{{ $data['random_index_mr'][$i] }}
-                                                                    </td>
-                                                                    <td>{{ $data['index1'][$i] }}</td>
-                                                                    <td>{{ $data['index2'][$i] }}</td>
-                                                                    <td>
-                                                                        @foreach ($data['individu_mutasi'] as $individu_mutasi)
-                                                                            @foreach ($individu_mutasi as $individu_mutasi)
-                                                                                {{ $individu_mutasi }}
-                                                                            @endforeach
-                                                                        @endforeach
-                                                                    </td>
-                                                                </tr>
-                                                            @endfor --}}
                                                             @foreach ($data['individu_mutasi'] as $individu_mutasi)
                                                                 <tr>
                                                                     <td>P{{ $data['random_index_mr'][$loop->iteration - 1] + 1 }}
                                                                     </td>
-                                                                    {{-- <td>{{ $data['index1'][$loop->iteration - 1] }}</td>
-                                                                    <td>{{ $data['index2'][$loop->iteration - 1] }}</td> --}}
+                                                                    <td>{{ $data['index1'][$loop->iteration - 1] }}</td>
+                                                                    <td>{{ $data['index2'][$loop->iteration - 1] }}</td>
                                                                     <td>
                                                                         @foreach ($individu_mutasi as $individu_mutasi)
                                                                             {{ $individu_mutasi }}
