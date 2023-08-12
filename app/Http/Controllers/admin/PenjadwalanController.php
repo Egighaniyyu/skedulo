@@ -3,20 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\DataGuru;
+use App\Models\JamBelajar;
 use App\Models\Penjadwalan;
 use App\Models\Penugasan;
-use App\Models\JamBelajar;
-use App\Models\MataPelajaran;
 use App\Models\Ruangan;
 use App\Models\WaktuBelajar;
-use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Excel;
-use App\Exports\PenjadwalanExport;
-
-use function PHPSTORM_META\type;
 
 class PenjadwalanController extends Controller
 {
@@ -88,7 +80,7 @@ class PenjadwalanController extends Controller
             toastr()->error('Jumlah individu tidak boleh kosong!');
             return redirect()->route('penjadwalan.index');
         }
-        
+
         //* generate individu
         $jum_idv = $request->jum_individu;
         $max_gen = $request->max_generasi;
@@ -128,8 +120,168 @@ class PenjadwalanController extends Controller
             if ($loop == 1) {
                 for ($i = 0; $i < $jum_idv; $i++) {
                     // generate individu
-                    $penugasan[$i] = Penugasan::all()->shuffle()->toArray(); //216
+                    // $penugasan[$i] = Penugasan::all()->shuffle()->toArray(); //216
+                    $penugasan[$i] = collect(Penugasan::all())->pluck('id')->toArray(); //216
+                    // dd($penugasan[$i]);
+
+//                     $array = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6];
+
+// // Mengelompokkan nilai-nilai ganda
+//                     $groupedValues = [];
+//                     foreach ($array as $value) {
+//                         if (!isset($groupedValues[$value])) {
+//                             $groupedValues[$value] = [];
+//                         }
+//                         $groupedValues[$value][] = $value;
+//                     }
+
+// // Nilai yang posisinya telah ditentukan
+//                     $specifiedValues = [
+//                         ['value' => 4, 'indexes' => [2, 3]],
+//                         ['value' => 5, 'indexes' => [6, 7]],
+//                     ];
+
+// // Mengacak posisi nilai yang belum ditentukan
+//                     $remainingValues = array_diff($array, array_column($specifiedValues, 'value'));
+//                     shuffle($remainingValues);
+
+// // Menggabungkan nilai yang telah ditentukan dan nilai yang diacak
+//                     $result = [];
+//                     foreach ($specifiedValues as $specified) {
+//                         $value = $specified['value'];
+//                         foreach ($specified['indexes'] as $index) {
+//                             $result[$index] = array_shift($groupedValues[$value]);
+//                         }
+//                     }
+//                     $remainingIndex = 0;
+//                     for ($i = 0; $i < count($array); $i++) {
+//                         if (!isset($result[$i])) {
+//                             $result[$i] = $remainingValues[$remainingIndex];
+//                             $remainingIndex++;
+//                         }
+//                     }
+
+//                     ksort($result);
+
+// // Hasil akhir
+//                     $finalArray = array_values($result);
+
+//                     dd($finalArray);
+
+                    // $array_ummi = [205, 205, 206, 206, 207, 207, 208, 208, 209, 209, 210, 210, 211, 211, 212, 212, 213, 213, 214, 214, 215, 215, 216, 216, 133, 133, 134, 134, 135, 135, 136, 136, 137, 137, 138, 138, 139, 139, 140, 140, 141, 141, 142, 142, 143, 143, 144, 144, 61, 61, 62, 62, 63, 63, 64, 64, 65, 65, 66, 66, 67, 67, 68, 68, 69, 69, 70, 70, 71, 71, 72, 72];
+
+                    // $array_index_ummi = [4, 5, 12, 13, 21, 22, 37, 38, 52, 53, 60, 61, 69, 70, 85, 86, 100, 101, 108, 109, 117, 118, 133, 134, 154, 155, 169, 170, 179, 180, 186, 187, 202, 203, 217, 218, 227, 228, 234, 235, 250, 251, 265, 266, 275, 276, 282, 283, 302, 303, 311, 312, 319, 320, 332, 333, 350, 351, 359, 360, 367, 368, 380, 381, 398, 399, 407, 408, 415, 416, 428, 429];
+
+                    // $gandakan_penugasan = collect($penugasan[$i])->flatMap(function ($item) {
+                    //     return [$item, $item];
+                    // })->all();
+
+                    // dd($gandakan_penugasan);
+
+                    $array_ummi = [
+                        205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72,
+                    ];
+
+                    // $array_index_ummi = [
+                    //     4, 12, 21, 37, 52, 60, 69, 85, 100, 108,
+                    //     117, 133, 154, 169, 179, 186, 202, 217, 227, 234,
+                    //     250, 265, 275, 282, 302, 311, 319, 332, 350, 359,
+                    //     367, 380, 398, 407, 415, 428,
+                    // ];
+
+                    $array_index_ummi = [
+                        2, 6, 11, 19, 26, 30, 35, 43, 50, 54, 59, 67, 77, 85, 90, 93, 101, 109, 114, 117, 125, 133, 138, 141, 151, 156, 160, 166, 175, 180, 184, 190, 199, 204, 208, 214,
+                    ];
+
+                    // dd(count($array_index_ummi));
+
+                    // Nilai yang posisinya ingin ditentukan
+                    $specifiedValues = [];
+
+                    for ($j = 0; $j < count($array_index_ummi); $j++) {
+                        $specifiedValues[$array_index_ummi[$j]] = $array_ummi[$j];
+                    }
+
+                    // dd($specifiedValues);
+
+                    // Array awal
+                    // $array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// Nilai yang posisinya ingin ditentukan
+                    // $specifiedValues = [
+                    //     2 => 4,
+                    //     5 => 7,
+                    //     9 => 6,
+                    // ];
+
+// Pisahkan nilai yang sudah ditentukan posisinya dari array asli
+                    $specifiedItems = array_values(array_intersect_key($penugasan[$i], $specifiedValues));
+                    // dd($specifiedItems);
+
+// Hapus nilai yang sudah ditentukan posisinya dari array asli
+                    $penugasan[$i] = array_diff($penugasan[$i], $specifiedItems);
+                    // dd($gandakan_penugasan);
+
+// Mengacak posisi nilai yang tersisa
+                    shuffle($penugasan[$i]);
+
+// Masukkan kembali nilai yang sudah ditentukan posisinya ke dalam array pada posisi yang diinginkan
+                    foreach ($specifiedValues as $index => $value) {
+                        array_splice($penugasan[$i], $index, 0, $value);
+                    }
+
+// Memastikan array hasil memiliki panjang yang sama dengan array awal
+                    while (count($penugasan[$i]) < count($penugasan[$i]) + count($specifiedValues) - count($specifiedItems)) {
+                        $penugasan[$i][] = end($penugasan[$i]) + 1;
+                    }
+                    // dd($penugasan[$i]);
+
+                    // $penugasan = [2, 9, 4, 1, 4, 7, 10, 6, 3, 6];
+                    $length = count($penugasan[$i]);
+
+                    // $exceptions = [];
+
+                    // for ($i = 0; $i < count($array_index_ummi); $i++) {
+                    //     $exceptions[$array_ummi[$i]] = $array_index_ummi[$i];
+                    // }
+
+                    // dd($exceptions);
+
+                    // $exceptions = [
+                    //     2 => 4,
+                    //     9 => 6,
+                    //     5 => 7,
+                    // ];
+
+                    $usedValues = array_values($specifiedValues);
+
+                    $newValues = [];
+
+                    for ($i = 1; $i <= $length; $i++) {
+                        if (!in_array($i, $penugasan) && !in_array($i, $usedValues)) {
+                            $newValues[] = $i;
+                        }
+                    }
+
+                    $replacementIndex = 0;
+
+                    foreach ($penugasan as $index => &$value) {
+                        if (array_key_exists($index, $specifiedValues)) {
+                            if ($value == $specifiedValues[$index]) {
+                                continue;
+                            }
+                        }
+
+                        if (in_array($value, $usedValues)) {
+                            $value = $newValues[$replacementIndex];
+                            $replacementIndex++;
+                        }
+                    }
+                    $penugasan[$i] = collect($penugasan)->flatten()->toArray();
+
+                    // return $array;
                 }
+                dd($penugasan);
             } else if ($loop > 1) {
                 $arrayList = array();
                 $penugasan = array();
@@ -311,7 +463,7 @@ class PenjadwalanController extends Controller
             if (empty($cr_rate)) {
                 $cr_rate = 0.75;
             } else {
-                $cr_rate = (int)$cr_rate / 100;
+                $cr_rate = (int) $cr_rate / 100;
             }
 
             // mencari nilai random
@@ -352,7 +504,6 @@ class PenjadwalanController extends Controller
                     $individu_crossover_parent[$i] = $individu_seleksi[$i];
                 }
             }
-
 
             // membuat key baru untuk array individu_crossover_parent
             $parent = array_values($individu_crossover_parent);
@@ -431,10 +582,9 @@ class PenjadwalanController extends Controller
 
             // dd($interval_cr);
 
-
             // menggabungkan individu terpilih crossover dengan individu yang tidak dijadikan parent crossover
             $individu_crossover_new = array();
-            $a=0;
+            $a = 0;
             for ($i = 0; $i < $jum_idv; $i++) {
                 if ($interval_cr[$i] == 1) {
                     $individu_crossover_new[$i] = $children[$a];
@@ -570,7 +720,7 @@ class PenjadwalanController extends Controller
             // }
 
             // dd($get_col_kelas, $get_filtered_guru, $value_duplicate);
-            $mutatedArray=array();
+            $mutatedArray = array();
             $mutatedArray = $individu_crossover_new;
             // dd($mutatedArray[0][1]);
             $mutation_rate = $request->mutation_rate;
@@ -674,7 +824,6 @@ class PenjadwalanController extends Controller
             })->all();
         }
 
-
         $data_jadwal = collect($ganda_mapel)->flatten(1)->toArray();
 
         // dd($data_jadwal);
@@ -703,17 +852,12 @@ class PenjadwalanController extends Controller
 
         $jadwal = Penjadwalan::all();
 
-
-
         // dd($waktu_belajar[1]['id']);
 
         // dd($waktu_belajar);
 
         // dd($ganda_mapel[0][0]['id']);
         // dd(($ganda_mapel)->toArray());
-
-
-
 
         // dd($array_urutan);
 
