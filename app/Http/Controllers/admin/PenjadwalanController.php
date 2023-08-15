@@ -129,7 +129,6 @@ class PenjadwalanController extends Controller
                 for ($i = 0; $i < $jum_idv; $i++) {
                     // generate individu
                     $penugasan_list[$i] = collect(Penugasan::all()->shuffle())->pluck('id')->toArray(); //216
-                    // dd($penugasan_list[$i]);
 
                     $indeks_nilai = [];
 
@@ -141,42 +140,7 @@ class PenjadwalanController extends Controller
                     }
 
                     $index_data_ummi = collect($indeks_nilai)->flatten()->toArray();
-                    // dd($penugasan_list, $index_data_ummi);
 
-                    // foreach ($array_index_ummi as $index => $newIndex) {
-                    //     if (isset($penugasan_list[$i][$index]) && isset($penugasan_list[$i][$newIndex])) {
-                    //         $temp = $penugasan_list[$i][$index];
-                    //         $penugasan_list[$i][$index] = $penugasan_list[$i][$newIndex];
-                    //         $penugasan_list[$i][$newIndex] = $temp;
-                    //     }
-                    // }
-
-                    // $new_penugasan_list = $penugasan_list[$i];
-
-                    // foreach ($array_index_ummi as $index => $nilai) {
-                    //     $temp = $new_penugasan_list[$index];
-                    //     $new_penugasan_list[$index] = $new_penugasan_list[array_search($nilai, $new_penugasan_list)];
-                    //     $new_penugasan_list[array_search($nilai, $new_penugasan_list)] = $temp;
-                    // }
-
-                    // for ($j = 0; $j < count($array_ummi); $j++) {
-                    //     // $random_index_mr[$j] = rand(0, count($mutatedArray) - 1);
-                    //     $index1[$j] = $array_index_ummi[$j];
-                    //     $index2[$j] = $index_data_ummi[$j];
-                    //     // dd($penugasan_list[$i]);
-
-                    //     // Pastikan kedua indeks yang dipilih berbeda
-                    //     while ($index2[$j] == $index1[$j]) {
-                    //         break;
-                    //     }
-
-                    //     // Menukar nilai antara kedua indeks
-                    //     $temp = $penugasan_list[$i][$index1[$j]];
-                    //     $penugasan_list[$i][$index1[$j]] = $penugasan_list[$i][$index2[$j]];
-                    //     $penugasan_list[$i][$index2[$j]] = $temp;
-                    //     $individu_mutasi[$j] = collect($penugasan_list[$i])->flatten()->toArray();
-                    //     $penugasan[$i] = $penugasan_list[$i];
-                    // }
                     for ($j = 0; $j < count($array_ummi); $j++) {
                         $index1 = $array_index_ummi[$j];
                         $index2 = $index_data_ummi[$j];
@@ -188,9 +152,6 @@ class PenjadwalanController extends Controller
                             $penugasan_list[$i][$index1] = $penugasan_list[$i][$index2];
                             $penugasan_list[$i][$index2] = $temp;
                         }
-
-                        // Jika diperlukan, lakukan penggabungan kembali di sini.
-                        // $individu_mutasi[$j] = collect($penugasan_list[$i])->flatten()->toArray();
 
                         // Penugasan ke array hasil
                         $penugasan[$i] = $penugasan_list[$i];
@@ -286,9 +247,6 @@ class PenjadwalanController extends Controller
                                 return $value > 2;
                             });
 
-                            // dd($counted_mapel[$k], array_key_exists(18, $counted_mapel[$k]));
-
-                            // dd($data_mingguan_mapel[$k], $counted_mapel[$k], $filtered_mapel[$k]);
                             $cek_ummi = array_key_exists(18, $filtered_mapel[$k]);
 
                             if (!empty($filtered_mapel[$k])) {
@@ -297,7 +255,6 @@ class PenjadwalanController extends Controller
                                 } else {
                                     $double_mapel += 1;
                                 }
-                                // $duplicate_mapel[$k] = [$double_mapel];
                             }
                         } else {
                             $data_mingguan_mapel[$k] = array_slice($gandakan_mapel[$j], $jum_jam[$k], $jum_jam[$k]);
@@ -317,7 +274,6 @@ class PenjadwalanController extends Controller
                                 } else {
                                     $double_mapel += 1;
                                 }
-                                // $duplicate_mapel[$k] = [$double_mapel];
                             }
                         }
                     }
@@ -328,33 +284,25 @@ class PenjadwalanController extends Controller
                 }
                 $collect_data_individu[$i] = $collect_data_guru;
                 $collect_double_mapel[$i] = $double_mapel;
-                // dd($collect_data_individu[$i]);
                 $fitness_guru[$i] = $collection_guru;
                 $double_mapel = 0;
             }
-            // dd($fitness_guru);
-            // dd($fitness_guru);
-            // dd(count($data_guru[0]));
             //* end generate individu
 
             //* hitung fitness
-            // if ($loop == 2) {
-            //     dd($flattenpenugasan);
-            // }
             $total_clash_guru = 0;
             $data_guru_ummi = [20, 21, 22, 23, 24, 25];
             for ($k = 0; $k < $jum_idv; $k++) {
                 for ($l = 0; $l < (count($data_guru[0])); $l++) {
                     for ($m = 0; $m < (count($jum_kelas)); $m++) {
                         $col_guru[$m] = collect($array_guru);
-                        $col_guru[$m]->push($fitness_guru[$k][$m][$l]); // Error pada $l
+                        $col_guru[$m]->push($fitness_guru[$k][$m][$l]);
                     }
-                    // dd($col_guru);
+
                     $col_kelas[$l] = collect($col_guru)->flatten()->toArray();
-                    // dd($col_kelas[$l]);
 
                     $counted_guru[$l] = collect($col_kelas[$l])->countBy();
-                    // dd($counted_guru[$l]);
+
                     $filtered_guru[$l] = $counted_guru[$l]->filter(function ($value) {
                         return $value > 1;
                     })->keys();
@@ -362,16 +310,12 @@ class PenjadwalanController extends Controller
                     $array_filtered_ummi[$l] = collect($filtered_guru[$l])->flatten()->toArray();
                     $get_guru_ummi[$l] = array_diff($array_filtered_ummi[$l], $data_guru_ummi);
 
-                    // dd($counted_guru, $filtered_guru[$l], $get_guru_ummi[$l]);
-
                     $total_clash_guru += count($get_guru_ummi[$l]);
                 }
-                // dd($col_kelas);
-                // $collect_clash_guru[$k] = count($filtered_guru);
+
                 $collect_clash_guru[$k] = $total_clash_guru;
                 $total_clash_guru = 0;
             }
-            // dd($m, $l, $k);
 
             for ($i = 0; $i < $jum_idv; $i++) {
                 $fitness_value[$i] = 1 / (1 + $collect_double_mapel[$i] + $collect_clash_guru[$i]);
@@ -476,7 +420,7 @@ class PenjadwalanController extends Controller
 
             // membuat key baru untuk array individu_crossover_parent
             $parent = array_values($individu_crossover_parent);
-            // dd($indexes,$parent);
+
             // menentukan titik potong crossover secara random
             $titik_potong = array();
             $numParents = count($parent);
@@ -487,7 +431,6 @@ class PenjadwalanController extends Controller
             $array = array();
             $key = 0;
             if ($numParents == 0) {
-                // echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
                 $children = $parent;
                 $titik_potong[0] = 0;
             } else if ($numParents == 1) {
@@ -500,7 +443,7 @@ class PenjadwalanController extends Controller
 
                 for ($i = 0; $i < $numParents; $i++) {
                     $parent1 = $parent[$i];
-                    $parent2 = $parent[($i + 1) % $numParents]; // Mengambil orangtua berikutnya secara siklikal
+                    $parent2 = $parent[($i + 1) % $numParents];
 
                     $titik_potong[$i] = rand(1, count($parent1) - 1);
 
@@ -544,12 +487,9 @@ class PenjadwalanController extends Controller
                     }
                 }
             } else {
-                // echo "<script>alert('Tidak ada individu yang dijadikan parent crossover!')</script>";
                 $children = $parent;
                 $titik_potong[0] = 0;
             }
-
-            // dd($interval_cr);
 
             // menggabungkan individu terpilih crossover dengan individu yang tidak dijadikan parent crossover
             $individu_crossover_new = array();
@@ -562,16 +502,6 @@ class PenjadwalanController extends Controller
                     $individu_crossover_new[$i] = $individu_seleksi[$i];
                 }
             }
-            // $arrayKeys = array_keys($individu_crossover);
-            // // dd($arrayKeys);
-            // $individu_crossover_new = array();
-            // for ($i = 0; $i < count($arrayKeys); $i++) {
-            //     $key = $arrayKeys[$i];
-            //     if (array_key_exists($key, $children)) {
-            //         $individu_crossover[$key] = $children[$key];
-            //     }
-            //     $individu_crossover_new[$i] = $individu_crossover[$key];
-            // }
             //* end crossover
 
             //* mutasi
@@ -605,25 +535,14 @@ class PenjadwalanController extends Controller
                 $penugasan[$i] = $array_urutan;
             }
 
-            // dd(collect($penugasan[0])->pluck('id_guru')->all());
-
             // filter individu berdasarkan kelas
             for ($i = 0; $i < $jum_idv; $i++) {
                 for ($j = 0; $j < count($jum_kelas); $j++) {
-                    // $data_kelas[$j] = collect($penugasan[$i])->where('id_ruangan', $j + 1)->values()->all();
-                    // $data_guru[$j] = collect($data_kelas[$j])->pluck('id_guru')->all();
                     $data_guru[$j] = collect($data_kelas[$j])->where('id_ruangan', $j + 1)->pluck('id_guru')->all();
                 }
                 $fitness_guru[$i] = $data_guru;
-                // $fitness_guru[$i] = $data_guru;
             }
 
-            // dd($fitness_guru[0][0][0]['id_guru']);
-
-            // dd($fitness_guru);
-            // return $fitness_guru;
-
-            // dd(count($data_guru[0]));
             $total_clash_guru = 0;
             $get_clash_guru = array();
             $get_col_kelas = array();
@@ -634,22 +553,12 @@ class PenjadwalanController extends Controller
                         $col_guru[$m] = collect($array_guru);
                         $col_guru[$m]->push($fitness_guru[$k][$m][$l]);
                     }
-                    // dd(collect($col_guru)->toArray());
 
                     //? kalau ngambil data $data_guru
                     $col_kelas[$l] = collect($col_guru)->flatten()->toArray();
 
-                    //? kalau ngambil data $data_kelas
-                    // $col_kelas[$l] = collect($col_guru)->pluck('id_guru')->toArray();
-                    // dd($col_kelas);
-                    // dd($col_kelas[1]);
-                    // dd($col_kelas[0]);
-                    // dd($fitness_guru[0], $col_kelas[$l]);
                     $counted_guru[$l] = collect($col_kelas[$l])->countBy();
-                    // dd($counted_guru);
 
-                    // dd($counted_guru[$l])
-                    // // dd($col_kelas[$l], $counted_guru[$l]);
                     $filtered_guru[$l] = $counted_guru[$l]->filter(function ($value) {
                         return $value > 1;
                     })->keys();
@@ -657,44 +566,14 @@ class PenjadwalanController extends Controller
                     $array_filtered_ummi[$l] = collect($filtered_guru[$l])->flatten()->toArray();
                     $get_guru_ummi[$l] = array_diff($array_filtered_ummi[$l], $data_guru_ummi);
 
-                    // dd($counted_guru, $filtered_guru[$l], $get_guru_ummi[$l]);
-
                     $total_clash_guru += count($get_guru_ummi[$l]);
                 }
-                // dd($ab, count($filtered_guru));
-                // $get_filtered_guru[$k] = collect($filtered_guru)->toArray();
-                // $get_col_kelas[$k] = $col_kelas;
-                // dd($get_col_kelas[$k]);
                 $collect_clash_guru[$k] = $total_clash_guru;
                 $total_clash_guru = 0;
-                // dd($collect_clash_guru[$k]);
             }
-            // dd($collect_clash_guru[0]);
-            // sum value collect_clash_guru
-            // dd($collect_clash_guru);
 
-            // get index yang duplicate
-            // for ($i = 0; $i < $jum_idv; $i++) {
-            //     for ($j = 0; $j < count($data_guru[0]) - 1; $j++) {
-            //         $parent_duplicate[$i][$j] = $get_col_kelas[$i][$j];
-            //         $index_duplicate[$i][$j] = $get_filtered_guru[$i][$j];
-            //         $get_indexes = array();
-
-            //         foreach ($parent_duplicate[$i][$j] as $index => $value) {
-            //             if (in_array($value, $index_duplicate[$i][$j])) {
-            //                 $get_indexes[] = $index;
-            //             }
-            //         }
-            //         // dd($parent_duplicate[$i][$j], $index_duplicate[$i][$j], $get_indexes);
-            //         $get[$i][$j] = $get_indexes;
-            //     }
-            //     $value_duplicate[$i] = $get;
-            // }
-
-            // dd($get_col_kelas, $get_filtered_guru, $value_duplicate);
             $mutatedArray = array();
             $mutatedArray = $individu_crossover_new;
-            // dd($mutatedArray[0][1]);
             $mutation_rate = $request->mutation_rate;
 
             $index1 = array();
@@ -715,8 +594,6 @@ class PenjadwalanController extends Controller
                 $random_index_mr[$i] = rand(0, count($mutatedArray) - 1);
                 $index1[$i] = array_rand($mutatedArray[$random_index_mr[$i]]);
                 $index2[$i] = array_rand($mutatedArray[$random_index_mr[$i]]);
-                // dd($mutatedArray[$random_index_mr[$i]]);
-
                 // Pastikan kedua indeks yang dipilih berbeda
                 while ($index2[$i] == $index1[$i]) {
                     $index2[$i] = array_rand($mutatedArray[$random_index_mr[$i]]);
@@ -729,7 +606,6 @@ class PenjadwalanController extends Controller
                 $individu_mutasi[$i] = collect($mutatedArray[$random_index_mr[$i]])->flatten()->toArray();
                 $parent_cr[$random_index_mr[$i]] = $mutatedArray[$random_index_mr[$i]];
             }
-            // dd($parent_cr);
 
             $arrayList = array();
             $penugasan = array();
@@ -767,7 +643,6 @@ class PenjadwalanController extends Controller
                 }
                 $collect_data_individu[$i] = collect($data_kelas)->flatten(1)->pluck('id')->toArray();
             }
-            // dd($collect_data_individu);
 
             for ($i = 0; $i < count($collect_data_individu); $i++) {
                 $indeks_nilai = [];
@@ -780,8 +655,6 @@ class PenjadwalanController extends Controller
                 }
 
                 $index_data_ummi = collect($indeks_nilai)->flatten()->toArray();
-
-                // dd($collect_data_individu[$i], $index_data_ummi, $array_index_ummi);
 
                 for ($j = 0; $j < count($array_ummi); $j++) {
                     $index_cr_1 = $array_index_ummi[$j];
@@ -797,15 +670,10 @@ class PenjadwalanController extends Controller
                         $collect_data_individu[$i][$index_cr_1] = $collect_data_individu[$i][$index_cr_1];
                     }
 
-                    // Jika diperlukan, lakukan penggabungan kembali di sini.
-                    // $individu_mutasi[$j] = collect($penugasan_list[$i])->flatten()->toArray();
-
                     // Penugasan ke array hasil
                     $parent_cr[$i] = $collect_data_individu[$i];
                 }
             }
-            // dd($index1, $index2, count($individu_mutasi));
-            // dd($parent_cr);
             //* end mutasi
 
             $result[$loop] = [
@@ -835,10 +703,6 @@ class PenjadwalanController extends Controller
             ];
             $loop++;
         } while ($loop <= $max_gen);
-        // dd($result[$max_gen]['random_index_mr']);
-        // dd($result[2]['random_index_mr'],$result[2]['individu_mutasi']);
-        // return $result;
-        // dd($result);
 
         //* get hasil genetika algoritma
         // mencari index dengan fitness value tertinggi
@@ -846,12 +710,9 @@ class PenjadwalanController extends Controller
         $maxValue = max($fitness_high); // Mencari nilai tertinggi dalam array
         $maxIndex = array_search($maxValue, $fitness_high); // Mencari indeks dari nilai tertinggi
 
-        // dd($fitness_high, $maxValue, $maxIndex);
-
         $arraySample = Penugasan::all()->toArray(); //216
         $array_id = $result[$max_gen]['parent_cr'][$maxIndex];
         $array_ga = array();
-        // dd($array_id, $arraySample);
 
         foreach ($array_id as $id) {
             foreach ($arraySample as $obj) {
@@ -871,8 +732,6 @@ class PenjadwalanController extends Controller
         }
 
         $data_jadwal = collect($ganda_mapel)->flatten(1)->toArray();
-
-        // dd($data_jadwal);
 
         $waktu_belajar = WaktuBelajar::all();
 
@@ -897,15 +756,6 @@ class PenjadwalanController extends Controller
         }
 
         $jadwal = Penjadwalan::all();
-
-        // dd($waktu_belajar[1]['id']);
-
-        // dd($waktu_belajar);
-
-        // dd($ganda_mapel[0][0]['id']);
-        // dd(($ganda_mapel)->toArray());
-
-        // dd($array_urutan);
 
         return view('admin.penjadwalan.index', compact('result', 'maxValue', 'jum_kelas', 'waktu_belajar', 'jadwal'));
     }
