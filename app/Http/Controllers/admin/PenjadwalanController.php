@@ -123,12 +123,109 @@ class PenjadwalanController extends Controller
             2, 6, 11, 19, 26, 30, 35, 43, 50, 54, 59, 67, 77, 85, 90, 93, 101, 109, 114, 117, 125, 133, 138, 141, 151, 156, 160, 166, 175, 180, 184, 190, 199, 204, 208, 214,
         ];
 
+        $full_array = [];
+        $range_end = count(Penugasan::all()->toArray());
+        // dd($range_end);
+
+        for ($i = 0; $i < $range_end; $i++) {
+            if (in_array($i, $array_index_ummi)) {
+                $full_array[] = $i;
+            } else {
+                $full_array[] = null;
+            }
+        }
+
+        $index_kode_mapel = array_keys($full_array, null);
+
+        // dd(count(array_keys($full_array, null)), array_keys($full_array, null));
+
+        $kode_mapel = [
+            [
+                [16, 3, 13, 8, 9, 6, 14, 1, 17, 2, 4, 5, 20, 21, 10, 7, 15, 19, 12, 11],
+                [5, 8, 15, 12, 7, 10, 21, 6, 1, 14, 19, 20, 3, 13, 4, 2, 11, 16, 9, 17],
+                [7, 6, 10, 4, 11, 8, 3, 15, 20, 9, 13, 1, 17, 14, 19, 21, 12, 5, 2, 16],
+            ],
+            [
+                [10, 17, 7, 1, 15, 11, 2, 4, 13, 6, 9, 19, 8, 5, 16, 20, 12, 3, 14, 21],
+                [11, 13, 16, 6, 1, 14, 5, 20, 4, 9, 3, 12, 17, 8, 7, 2, 15, 21, 19, 10],
+                [9, 7, 6, 8, 2, 19, 12, 10, 21, 14, 20, 16, 1, 11, 3, 15, 5, 17, 13, 4],
+            ],
+            [
+                [7, 8, 5, 14, 6, 10, 16, 17, 12, 1, 19, 3, 13, 15, 11, 4, 21, 2, 20, 9],
+                [12, 1, 17, 9, 5, 16, 7, 13, 3, 8, 21, 10, 15, 2, 19, 6, 11, 14, 4, 20],
+                [13, 2, 10, 6, 8, 7, 1, 20, 9, 12, 16, 19, 14, 4, 5, 3, 17, 21, 11, 15],
+            ],
+        ];
+
+        // $shuffle_kode_mapel = collect($kode_mapel)->shuffle()->toArray();
+        foreach ($kode_mapel as &$index) {
+            shuffle($index);
+        }
+        // dd($kode_mapel);
+
+        // mendapatkan id penugasan dari mapel
+        $kode_kelas = 1;
+        for ($j = 0; $j < 3; $j++) {
+            for ($k = 0; $k < 3; $k++) {
+                for ($l = 0; $l < count($kode_mapel[$j][$k]); $l++) {
+                    // dd($kode_mapel[$j][$k][19]);
+                    $results[] = Penugasan::select('id')
+                        ->where('id_mapel', '=', $kode_mapel[$j][$k][$l])
+                        ->where('id_ruangan', '=', $kode_kelas)
+                        ->get()
+                        ->toArray();
+
+                }
+                $collect_id_shuffle[$k] = collect($results)->flatten()->toArray();
+                $results = [];
+                $kode_kelas++;
+            }
+            $get_id_shuffle[$j] = $collect_id_shuffle;
+        }
+        // dd(count($index_kode_mapel), count(collect($get_id_shuffle)->flatten()->toArray()));
+
         do {
 
             if ($loop == 1) {
                 for ($i = 0; $i < $jum_idv; $i++) {
                     // generate individu
-                    $penugasan_list[$i] = collect(Penugasan::all()->shuffle())->pluck('id')->toArray(); //216
+                    // $array = [
+                    //     [199, 157, 166],
+                    //     [200, 158, 168], // bug 200
+                    //     [201, 159, 170],
+                    // ];
+
+                    // // Step 1: Choose random index for the first array
+                    // $randomIndex = array_rand($array[0]);
+                    // $chosenValue = $array[0][$randomIndex];
+                    // $array[0] = [$chosenValue];
+
+                    // // Step 2: Remove the chosen index from arrays 2 and 3
+                    // unset($array[1][$randomIndex]);
+                    // unset($array[2][$randomIndex]);
+                    // $key = array_keys($array[1]);
+
+                    // // Step 3: Choose random index for the second array
+                    // $randomIndex = $key[array_rand($key)];
+                    // $chosenValue = $array[1][$randomIndex];
+                    // $array[1] = [$chosenValue];
+
+                    // // Step 4: Remove index 1 from arrays 2 and 3
+                    // // unset($array[2][1]);
+                    // unset($array[1][$randomIndex]);
+                    // unset($array[2][$randomIndex]);
+
+                    // // Result
+                    // $result = array_values($array);
+                    // dd($randomIndex, collect($result)->flatten()->toarray());
+
+                    $penugasan_list[$i] = collect(Penugasan::all()->shuffle())->toArray(); //216
+                    // dd($penugasan_list[$i]);
+                    for ($j = 0; $j < count($jum_kelas); $j++) {
+                        // filter individu berdasarkan kelas
+                        $data_kelas[$j] = collect($penugasan_list[$i])->where('id_ruangan', $j + 1)->values()->all();
+                    }
+                    $penugasan_list[$i] = collect($data_kelas)->flatten(1)->pluck('id')->toArray();
 
                     $indeks_nilai = [];
 
@@ -155,6 +252,7 @@ class PenjadwalanController extends Controller
 
                         // Penugasan ke array hasil
                         $penugasan[$i] = $penugasan_list[$i];
+                        // dd($penugasan[$i]);
                     }
 
                     // dd($penugasan[$i]);
@@ -220,7 +318,6 @@ class PenjadwalanController extends Controller
 
             //* generate individu
             for ($i = 0; $i < $jum_idv; $i++) {
-                // $penugasan[$i] = Penugasan::all()->shuffle()->toArray(); //216
 
                 $flattenpenugasan[$i] = collect($penugasan[$i])->pluck('id')->flatten(1)->toArray();
 
@@ -655,6 +752,7 @@ class PenjadwalanController extends Controller
                 }
 
                 $index_data_ummi = collect($indeks_nilai)->flatten()->toArray();
+                // dd($index_data_ummi);
 
                 for ($j = 0; $j < count($array_ummi); $j++) {
                     $index_cr_1 = $array_index_ummi[$j];

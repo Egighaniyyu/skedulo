@@ -259,6 +259,7 @@
                                                         class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
                                                         <thead class="student-thread">
                                                             <tr>
+                                                                <th>No.</th>
                                                                 <th>Individu Ke-</th>
                                                                 <th>Index mutasi 1</th>
                                                                 <th>Index mutasi 2</th>
@@ -268,6 +269,7 @@
                                                         <tbody>
                                                             @foreach ($data['individu_mutasi'] as $individu_mutasi)
                                                                 <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
                                                                     <td>P{{ $data['random_index_mr'][$loop->iteration - 1] + 1 }}
                                                                     </td>
                                                                     <td>{{ $data['index1'][$loop->iteration - 1] }}</td>
