@@ -40,9 +40,9 @@
                             <form action="{{ route('login') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Email or Nama <span class="login-danger">*</span></label>
+                                    <label>Username<span class="login-danger">*</span></label>
                                     <input class="form-control" name="login" type="text"
-                                        placeholder="Enter your Nama or email" required>
+                                        placeholder="Enter your Username" required>
                                     <span class="profile-views"><i class="fas fa-user-circle"></i></span>
                                 </div>
                                 <div class="form-group">

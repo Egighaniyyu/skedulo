@@ -123,65 +123,65 @@ class PenjadwalanController extends Controller
             2, 6, 11, 19, 26, 30, 35, 43, 50, 54, 59, 67, 77, 85, 90, 93, 101, 109, 114, 117, 125, 133, 138, 141, 151, 156, 160, 166, 175, 180, 184, 190, 199, 204, 208, 214,
         ];
 
-        $full_array = [];
-        $range_end = count(Penugasan::all()->toArray());
-        // dd($range_end);
+        // $full_array = [];
+        // $range_end = count(Penugasan::all()->toArray());
+        // // dd($range_end);
 
-        for ($i = 0; $i < $range_end; $i++) {
-            if (in_array($i, $array_index_ummi)) {
-                $full_array[] = $i;
-            } else {
-                $full_array[] = null;
-            }
-        }
+        // for ($i = 0; $i < $range_end; $i++) {
+        //     if (in_array($i, $array_index_ummi)) {
+        //         $full_array[] = $i;
+        //     } else {
+        //         $full_array[] = null;
+        //     }
+        // }
 
-        $index_kode_mapel = array_keys($full_array, null);
+        // $index_kode_mapel = array_keys($full_array, null);
 
-        // dd(count(array_keys($full_array, null)), array_keys($full_array, null));
+        // // dd(count(array_keys($full_array, null)), array_keys($full_array, null));
 
-        $kode_mapel = [
-            [
-                [16, 3, 13, 8, 9, 6, 14, 1, 17, 2, 4, 5, 20, 21, 10, 7, 15, 19, 12, 11],
-                [5, 8, 15, 12, 7, 10, 21, 6, 1, 14, 19, 20, 3, 13, 4, 2, 11, 16, 9, 17],
-                [7, 6, 10, 4, 11, 8, 3, 15, 20, 9, 13, 1, 17, 14, 19, 21, 12, 5, 2, 16],
-            ],
-            [
-                [10, 17, 7, 1, 15, 11, 2, 4, 13, 6, 9, 19, 8, 5, 16, 20, 12, 3, 14, 21],
-                [11, 13, 16, 6, 1, 14, 5, 20, 4, 9, 3, 12, 17, 8, 7, 2, 15, 21, 19, 10],
-                [9, 7, 6, 8, 2, 19, 12, 10, 21, 14, 20, 16, 1, 11, 3, 15, 5, 17, 13, 4],
-            ],
-            [
-                [7, 8, 5, 14, 6, 10, 16, 17, 12, 1, 19, 3, 13, 15, 11, 4, 21, 2, 20, 9],
-                [12, 1, 17, 9, 5, 16, 7, 13, 3, 8, 21, 10, 15, 2, 19, 6, 11, 14, 4, 20],
-                [13, 2, 10, 6, 8, 7, 1, 20, 9, 12, 16, 19, 14, 4, 5, 3, 17, 21, 11, 15],
-            ],
-        ];
+        // $kode_mapel = [
+        //     [
+        //         [16, 3, 13, 8, 9, 6, 14, 1, 17, 2, 4, 5, 20, 21, 10, 7, 15, 19, 12, 11],
+        //         [5, 8, 15, 12, 7, 10, 21, 6, 1, 14, 19, 20, 3, 13, 4, 2, 11, 16, 9, 17],
+        //         [7, 6, 10, 4, 11, 8, 3, 15, 20, 9, 13, 1, 17, 14, 19, 21, 12, 5, 2, 16],
+        //     ],
+        //     [
+        //         [10, 17, 7, 1, 15, 11, 2, 4, 13, 6, 9, 19, 8, 5, 16, 20, 12, 3, 14, 21],
+        //         [11, 13, 16, 6, 1, 14, 5, 20, 4, 9, 3, 12, 17, 8, 7, 2, 15, 21, 19, 10],
+        //         [9, 7, 6, 8, 2, 19, 12, 10, 21, 14, 20, 16, 1, 11, 3, 15, 5, 17, 13, 4],
+        //     ],
+        //     [
+        //         [7, 8, 5, 14, 6, 10, 16, 17, 12, 1, 19, 3, 13, 15, 11, 4, 21, 2, 20, 9],
+        //         [12, 1, 17, 9, 5, 16, 7, 13, 3, 8, 21, 10, 15, 2, 19, 6, 11, 14, 4, 20],
+        //         [13, 2, 10, 6, 8, 7, 1, 20, 9, 12, 16, 19, 14, 4, 5, 3, 17, 21, 11, 15],
+        //     ],
+        // ];
 
-        // $shuffle_kode_mapel = collect($kode_mapel)->shuffle()->toArray();
-        foreach ($kode_mapel as &$index) {
-            shuffle($index);
-        }
-        // dd($kode_mapel);
+        // // $shuffle_kode_mapel = collect($kode_mapel)->shuffle()->toArray();
+        // foreach ($kode_mapel as &$index) {
+        //     shuffle($index);
+        // }
+        // // dd($kode_mapel);
 
-        // mendapatkan id penugasan dari mapel
-        $kode_kelas = 1;
-        for ($j = 0; $j < 3; $j++) {
-            for ($k = 0; $k < 3; $k++) {
-                for ($l = 0; $l < count($kode_mapel[$j][$k]); $l++) {
-                    // dd($kode_mapel[$j][$k][19]);
-                    $results[] = Penugasan::select('id')
-                        ->where('id_mapel', '=', $kode_mapel[$j][$k][$l])
-                        ->where('id_ruangan', '=', $kode_kelas)
-                        ->get()
-                        ->toArray();
+        // // mendapatkan id penugasan dari mapel
+        // $kode_kelas = 1;
+        // for ($j = 0; $j < 3; $j++) {
+        //     for ($k = 0; $k < 3; $k++) {
+        //         for ($l = 0; $l < count($kode_mapel[$j][$k]); $l++) {
+        //             // dd($kode_mapel[$j][$k][19]);
+        //             $results[] = Penugasan::select('id')
+        //                 ->where('id_mapel', '=', $kode_mapel[$j][$k][$l])
+        //                 ->where('id_ruangan', '=', $kode_kelas)
+        //                 ->get()
+        //                 ->toArray();
 
-                }
-                $collect_id_shuffle[$k] = collect($results)->flatten()->toArray();
-                $results = [];
-                $kode_kelas++;
-            }
-            $get_id_shuffle[$j] = $collect_id_shuffle;
-        }
+        //         }
+        //         $collect_id_shuffle[$k] = collect($results)->flatten()->toArray();
+        //         $results = [];
+        //         $kode_kelas++;
+        //     }
+        //     $get_id_shuffle[$j] = $collect_id_shuffle;
+        // }
         // dd(count($index_kode_mapel), count(collect($get_id_shuffle)->flatten()->toArray()));
 
         do {
@@ -397,6 +397,7 @@ class PenjadwalanController extends Controller
                     }
 
                     $col_kelas[$l] = collect($col_guru)->flatten()->toArray();
+                    // dd($col_kelas);
 
                     $counted_guru[$l] = collect($col_kelas[$l])->countBy();
 
@@ -635,10 +636,12 @@ class PenjadwalanController extends Controller
             // filter individu berdasarkan kelas
             for ($i = 0; $i < $jum_idv; $i++) {
                 for ($j = 0; $j < count($jum_kelas); $j++) {
-                    $data_guru[$j] = collect($data_kelas[$j])->where('id_ruangan', $j + 1)->pluck('id_guru')->all();
+                    $data_guru[$j] = collect($data_kelas[$j])->where('id_ruangan', $j + 1)->all();
+                    // $data_guru[$j] = collect($data_kelas[$j])->where('id_ruangan', $j + 1)->pluck('id_guru')->all();
                 }
                 $fitness_guru[$i] = $data_guru;
             }
+            // dd($fitness_guru);
 
             $total_clash_guru = 0;
             $get_clash_guru = array();
@@ -650,25 +653,64 @@ class PenjadwalanController extends Controller
                         $col_guru[$m] = collect($array_guru);
                         $col_guru[$m]->push($fitness_guru[$k][$m][$l]);
                     }
+                    // dd($col_guru);
 
                     //? kalau ngambil data $data_guru
-                    $col_kelas[$l] = collect($col_guru)->flatten()->toArray();
+                    // $col_kelas[$l] = collect($col_guru)->flatten()->toArray();
+                    $col_kelas[$l] = collect($col_guru)->toArray();
 
-                    $counted_guru[$l] = collect($col_kelas[$l])->countBy();
+                    $guruIdMap = [];
+                    $guruIdCounts = [];
+                    // dd($col_kelas[$l]);
+                    for ($n = 0; $n < count($jum_kelas); $n++) {
+                        $id = $col_kelas[0][$n][0]['id'];
+                        $idGuru = $col_kelas[0][$n][0]['id_guru'];
+                        // dd($id, $idGuru);
 
-                    $filtered_guru[$l] = $counted_guru[$l]->filter(function ($value) {
-                        return $value > 1;
-                    })->keys();
+                        if (!isset($guruIdMap[$idGuru])) {
+                            $guruIdMap[$idGuru] = [];
+                        }
+
+                        $guruIdMap[$idGuru][] = $id;
+                    }
+                    // dd($col_kelas[$l], $guruIdMap);
+                    $arraysWithMultipleValues = [];
+
+                    foreach ($guruIdMap as $key => $value) {
+                        // Periksa jumlah elemen dalam array
+                        $numValues = count($value);
+
+                        // Jika lebih dari satu nilai, tambahkan ke array hasil
+                        if ($numValues > 1) {
+                            $arraysWithMultipleValues[$key] = $value;
+                        }
+                    }
+
+                    foreach ($arraysWithMultipleValues as $key => $value) {
+                        $guruIdCounts[$key] = (count($value) - 1);
+                    }
+
+                    // $counted_guru[$l] = collect($col_kelas[$l])->countBy();
+
+                    // $filtered_guru[$l] = $counted_guru[$l]->filter(function ($value) {
+                    //     return $value > 1;
+                    // })->keys();
+                    $idxg[$n] = array_keys($guruIdCounts);
+                    // dd($guruIdMap, $arraysWithMultipleValues, $guruIdCounts, collect($idxg)->flatten()->toArray(), $data_guru_ummi);
 
                     $array_filtered_ummi[$l] = collect($filtered_guru[$l])->flatten()->toArray();
-                    $get_guru_ummi[$l] = array_diff($array_filtered_ummi[$l], $data_guru_ummi);
+                    $get_guru_ummi[$l] = array_diff(collect($idxg)->flatten()->toArray(), $data_guru_ummi);
+                    // dd($get_guru_ummi[$l]);
+                    // dd($filtered_guru, $array_filtered_ummi, $get_guru_ummi[$l]);
 
                     $total_clash_guru += count($get_guru_ummi[$l]);
                 }
                 $collect_clash_guru[$k] = $total_clash_guru;
+                dd($idxg);
                 $total_clash_guru = 0;
             }
 
+            // dd($collect_clash_guru);
             $mutatedArray = array();
             $mutatedArray = $individu_crossover_new;
             $mutation_rate = $request->mutation_rate;

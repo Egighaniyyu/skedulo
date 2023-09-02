@@ -8,8 +8,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
-
 class LoginController extends Controller
 {
     /*
@@ -21,7 +19,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -55,12 +53,12 @@ class LoginController extends Controller
         $input = $request->all();
         $this->validate($request, [
             'login' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         // login with email or username
         $login = request()->input('login');
-        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nama';
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         request()->merge([$field => $login]);
         if (auth()->attempt(array($field => $input['login'], 'password' => $input['password']))) {
             if (auth()->user()->role == 'admin') {

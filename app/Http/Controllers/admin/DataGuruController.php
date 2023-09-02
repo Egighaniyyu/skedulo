@@ -5,7 +5,6 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\DataGuru;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DataGuruController extends Controller
 {
@@ -50,24 +49,21 @@ class DataGuruController extends Controller
         if ($request->nama == null) {
             toastr()->error('Nama tidak boleh kosong!');
             return redirect()->route('guru-list.create');
-        } elseif ($request->email == null) {
-            toastr()->error('Email tidak boleh kosong!');
-            return redirect()->route('guru-list.create');
         } elseif ($request->password == null) {
             toastr()->error('Password tidak boleh kosong!');
             return redirect()->route('guru-list.create');
         } elseif ($request->role == null) {
             toastr()->error('Role tidak boleh kosong!');
             return redirect()->route('guru-list.create');
-        } else{
+        } else {
             DataGuru::create([
                 'nama' => $request->nama,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => bcrypt($request->password),
                 'role' => $request->role,
                 'foto' => $imageName,
             ]);
-    
+
             toastr()->success('Data berhasil ditambahkan!');
             return redirect()->route('guru-list.index');
         }

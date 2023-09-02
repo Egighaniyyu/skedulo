@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\MataPelajaran;
+use Illuminate\Database\Seeder;
 
 class MataPelajaranSeeder extends Seeder
 {
@@ -66,6 +65,15 @@ class MataPelajaranSeeder extends Seeder
         ]);
         MataPelajaran::create([
             'mapel' => 'Ummi',
+        ]);
+        MataPelajaran::create([
+            'mapel' => 'Matematika',
+        ]);
+        MataPelajaran::create([
+            'mapel' => 'Bahasa Indonesia',
+        ]);
+        MataPelajaran::create([
+            'mapel' => 'Bahasa Inggris',
         ]);
     }
 }

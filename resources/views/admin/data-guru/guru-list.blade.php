@@ -12,7 +12,7 @@
                     </th>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Username</th>
                     <th>Password</th>
                     <th>Role</th>
                     <th class="text-end">Action</th>
@@ -34,7 +34,7 @@
                                 <a href="#">{{ $guru->nama }}</a>
                             </h2>
                         </td>
-                        <td>{{ $guru->email }}</td>
+                        <td>{{ $guru->username }}</td>
                         <td>{{ $guru->password }}</td>
                         <td>{{ $guru->role }}</td>
                         <td class="text-end">
